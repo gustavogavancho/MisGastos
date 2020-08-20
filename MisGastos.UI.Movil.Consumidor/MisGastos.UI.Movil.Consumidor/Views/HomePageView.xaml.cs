@@ -25,7 +25,7 @@ namespace MisGastos.UI.Movil.Consumidor.Views
             _cuentaManager = _factoryManager.CuentaManager();
             GetCuentas();
             this.BindingContext = cuentas;
-            //InsertarCuenta();
+            InsertarCuenta();
         }
 
         public void InsertarCuenta()

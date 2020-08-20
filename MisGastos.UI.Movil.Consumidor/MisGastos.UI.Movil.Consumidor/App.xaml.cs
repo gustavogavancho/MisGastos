@@ -1,4 +1,5 @@
 ﻿using MisGastos.BIZ;
+using MisGastos.UI.Movil.Consumidor.Models;
 using MisGastos.UI.Movil.Consumidor.Views;
 using System;
 using Xamarin.Forms;
@@ -8,15 +9,13 @@ namespace MisGastos.UI.Movil.Consumidor
 {
     public partial class App : Application
     {
-        public static FactoryManager _factory;
         public App()
         {
             InitializeComponent();
 
-            _factory = new FactoryManager("LiteDB");
+            DependencyService.Register<MockDataStore>();
 
-            //MainPage = new MainPage();
-            MainPage = new MasterDetailPageView();
+            MainPage = new HomePageView();
         }
 
         protected override void OnStart()
