@@ -4,6 +4,7 @@ using MisGastos.COMMON.Interfaces;
 using MisGastos.UI.Movil.Consumidor.Utility;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MisGastos.UI.Movil.Consumidor.ViewModels
@@ -41,6 +42,9 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
         public Command GuardarCuentaCommand { get; }
         public Command EliminarCuentaCommand { get; }
+        public Command RegresarCommand { get;  }
+        public Command OnApperaringCommand { get; }
+        public Command OnDisappearingCommand { get; }
 
         public CuentaDetailViewModel(FactoryManager factoryManager)
         {
@@ -49,7 +53,43 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             _cuentaManager = _factoryManager.CuentaManager();
             GuardarCuentaCommand = new Command(OnGuardarCuenta);
             EliminarCuentaCommand = new Command(OnEliminarCuenta);
+            RegresarCommand = new Command(OnRegresar);
+            OnApperaringCommand = new Command(OnApperaring);
+            OnDisappearingCommand = new Command(OnDisappearing);
             ActualizarDatos();
+        }
+
+        private void OnApperaring(object obj)
+        {
+            Shell.Current.Navigating += Current_Navigating;
+        }
+
+        private void OnDisappearing()
+        {
+            Shell.Current.Navigating -= Current_Navigating;
+            ActualizarDatos();
+        }
+
+        private async void Current_Navigating(object sender,
+                                ShellNavigatingEventArgs e)
+        {
+            if (e.CanCancel)
+            {
+                e.Cancel();
+                await GoBack();
+            }
+        }
+        private async Task GoBack()
+        {
+            Shell.Current.Navigating -= Current_Navigating;
+            await Shell.Current.GoToAsync("..", true);
+        }
+
+        private async void OnRegresar(object obj)
+        {
+            ActualizarDatos();
+
+            await Shell.Current.Navigation.PopAsync();
         }
 
         private void LoadCuentaId(string cuentaId)

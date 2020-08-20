@@ -4,7 +4,7 @@
              x:Class="MisGastos.UI.Movil.Consumidor.Views.CuentaDetailPage"
              Title="{Binding Title}">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior IsEnabled="False"/>
+        <BackButtonBehavior Command="{Binding RegresarCommand}"/>
     </Shell.BackButtonBehavior>
 
     <ContentPage.ToolbarItems>
