@@ -6,5 +6,8 @@ namespace MisGastos.UI.Movil.Consumidor.Utility
     {
         public static CuentaViewModel CuentaViewModel { get; set; } =
             new CuentaViewModel(App.FactoryManager);
+
+        public static CuentaDetailViewModel CuentaDetailViewModel { get; set; } =
+            new CuentaDetailViewModel(App.FactoryManager);
     }
 }

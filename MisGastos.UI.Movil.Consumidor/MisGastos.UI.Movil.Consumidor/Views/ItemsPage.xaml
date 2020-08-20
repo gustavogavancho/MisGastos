@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:MisGastos.UI.Movil.Consumidor.ViewModels"
              xmlns:model="clr-namespace:MisGastos.UI.Movil.Consumidor.Models"
              x:Name="BrowseItemsPage">
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>

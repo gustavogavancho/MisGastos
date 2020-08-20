@@ -9,9 +9,6 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
 
-            <ListView ItemsSource="{Binding cuentas}">
-                
-            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
