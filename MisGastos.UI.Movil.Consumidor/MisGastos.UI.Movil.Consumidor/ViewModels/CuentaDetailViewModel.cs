@@ -7,11 +7,14 @@ using Xamarin.Forms;
 
 namespace MisGastos.UI.Movil.Consumidor.ViewModels
 {
+    [QueryProperty(nameof(CuentaId), nameof(CuentaId))]
     public class CuentaDetailViewModel : BaseViewModel
     {
-        private Cuenta _cuenta;
         FactoryManager _factoryManager;
         ICuentaManager _cuentaManager;
+
+        private Cuenta _cuenta = new Cuenta();
+        private string _cuentaId;
 
         public Cuenta Cuenta
         {
@@ -19,7 +22,14 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             set => SetProperty(ref _cuenta, value);
         }
 
+        public string CuentaId
+        {
+            get => _cuentaId;
+            set => SetProperty(ref _cuentaId, value);
+        }
+
         public Command GuardarCuentaCommand { get; }
+        public Command EliminarCuentaCommand { get; }
 
         public CuentaDetailViewModel(FactoryManager factoryManager)
         {
@@ -27,7 +37,16 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             _factoryManager = factoryManager;
             _cuentaManager = _factoryManager.CuentaManager();
             GuardarCuentaCommand = new Command(OnGuardarCuenta);
-            Cuenta = new Cuenta();
+            EliminarCuentaCommand = new Command(OnEliminarCuenta);
+        }
+
+        private async void OnEliminarCuenta(object obj)
+        {
+            _cuentaManager.Eliminar(CuentaId);
+
+            MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
+
+            await Shell.Current.Navigation.PopAsync();
         }
 
         private async void OnGuardarCuenta(object obj)
@@ -37,7 +56,6 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
 
             await Shell.Current.Navigation.PopAsync();
-
         }
     }
 }

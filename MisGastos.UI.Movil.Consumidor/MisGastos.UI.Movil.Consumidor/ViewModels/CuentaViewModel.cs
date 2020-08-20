@@ -24,6 +24,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         }
 
         public Command AgregarCuentaCommand { get; }
+        public Command CuentaSelectedCommand { get; }
 
         public CuentaViewModel(FactoryManager factoryManager)
         {
@@ -31,10 +32,16 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             _factoryManager = factoryManager;
             _cuentaManager = _factoryManager.CuentaManager();
             AgregarCuentaCommand = new Command(OnAgregarCuenta);
+            CuentaSelectedCommand = new Command<Cuenta>(OnCuentaSelected);
             ActualizarDatos();
 
             MessagingCenter.Subscribe<CuentaDetailViewModel, Cuenta>
                 (this, MessageNames.CuentaChangedMessage, OnCuentaChanged);
+        }
+
+        private async void OnCuentaSelected(Cuenta cuenta)
+        {
+            await Shell.Current.GoToAsync($"{nameof(CuentaDetailPage)}?{nameof(CuentaDetailViewModel.CuentaId)}={cuenta.Id}");
         }
 
         private void OnCuentaChanged(CuentaDetailViewModel sender, Cuenta pie)

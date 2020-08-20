@@ -5,7 +5,7 @@
              Title="{Binding Title}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Guardar" Command="{Binding GuardarCuentaCommand}"/>
-        <ToolbarItem Text="Eliminar"/>
+        <ToolbarItem Text="Eliminar" Command="{Binding EliminarCuentaCommand}" IsEnabled="{Binding HabilitarEliminar}"/>
     </ContentPage.ToolbarItems>
     
     <Grid>

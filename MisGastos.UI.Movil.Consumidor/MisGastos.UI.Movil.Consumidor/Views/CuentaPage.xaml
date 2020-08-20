@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MisGastos.UI.Movil.Consumidor.Views.CuentaPage">
+             x:Class="MisGastos.UI.Movil.Consumidor.Views.CuentaPage"
+             xmlns:viewModels="clr-namespace:MisGastos.UI.Movil.Consumidor.ViewModels"
+             xmlns:behavior="clr-namespace:MisGastos.UI.Movil.Consumidor.Behaviors"
+             Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Agregar" Command="{Binding AgregarCuentaCommand}" />
@@ -16,7 +19,13 @@
         <Label Grid.Row="0" Text="Lista de cuentas"/>
         
         <ListView x:Name="CuentaListView" HasUnevenRows="True" CachingStrategy="RecycleElement" Grid.Row="1"
-                  ItemsSource="{Binding Cuentas}">
+                  ItemsSource="{Binding Cuentas}" SelectionMode="Single">
+            <ListView.Behaviors>
+                <behavior:EventToCommandBehavior
+                    EventName="ItemTapped"
+                    Command="{Binding CuentaSelectedCommand}"
+                    EventArgsConverter="{StaticResource LocalItemTappedConverter}"/>
+            </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

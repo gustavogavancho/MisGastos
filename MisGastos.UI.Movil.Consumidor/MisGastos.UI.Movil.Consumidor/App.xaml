@@ -1,9 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MisGastos.UI.Movil.Consumidor.App">
+             x:Class="MisGastos.UI.Movil.Consumidor.App"
+             xmlns:converter="clr-namespace:MisGastos.UI.Movil.Consumidor.Converters">
     <Application.Resources>
         <ResourceDictionary>
+
+            <converter:ItemTappedConverter x:Key="LocalItemTappedConverter"/>
+
             <Color x:Key="Primary">#2196F3</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
