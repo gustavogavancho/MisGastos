@@ -1,10 +1,11 @@
-﻿using MisGastos.UI.Movil.Consumidor.Services;
+﻿using MisGastos.UI.Movil.Consumidor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace MisGastos.UI.Movil.Consumidor.Models
+namespace MisGastos.UI.Movil.Consumidor.Services
 {
     public class MockDataStore : IDataStore<Item>
     {

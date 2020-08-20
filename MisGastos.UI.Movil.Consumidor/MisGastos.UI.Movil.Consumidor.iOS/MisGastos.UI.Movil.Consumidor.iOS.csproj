@@ -183,4 +183,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tab_categoria.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tab_cuenta.png" />
+  </ItemGroup>
 </Project>
