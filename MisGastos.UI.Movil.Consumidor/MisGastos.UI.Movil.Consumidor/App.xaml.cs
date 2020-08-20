@@ -1,4 +1,5 @@
 ﻿using MisGastos.BIZ;
+using MisGastos.UI.Movil.Consumidor.Helpers;
 using Xamarin.Forms;
 
 namespace MisGastos.UI.Movil.Consumidor
@@ -10,6 +11,7 @@ namespace MisGastos.UI.Movil.Consumidor
         {
             InitializeComponent();
 
+            SeedData.SeedCuenta();
             MainPage = new AppShell();
         }
 
