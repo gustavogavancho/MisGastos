@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MisGastos.COMMON\MisGastos.COMMON.csproj" />
+    <ProjectReference Include="..\MisGastos.DAL.Local.LiteDB\MisGastos.DAL.Local.LiteDB.csproj" />
+  </ItemGroup>
+
+</Project>
