@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MisGastos.UI.Movil.Consumidor.Views.HomePage"
+             Title="{Binding Title}"
+             Padding="5">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label Text="Balance"/>
+            <Label Text="0.00" />
+            <StackLayout Orientation="Horizontal">
+                <Button Text="+" Command="{Binding RegistrarIngresoCommnad}" />
+                <Button Text="-" Command="{Binding RegistrarEgresoCommand}"/>
+            </StackLayout>
+            
+            <ListView>
+                
+            </ListView>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -4,6 +4,7 @@
        xmlns:local="clr-namespace:MisGastos.UI.Movil.Consumidor.Views"
        Title="MisGastos.UI.Movil.Consumidor"
        x:Class="MisGastos.UI.Movil.Consumidor.AppShell">
+    
     <Shell.Resources>
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
@@ -23,7 +24,9 @@
     </Shell.Resources>
 
     <TabBar>
+        <ShellContent Title="Incio" Icon="tab_home.png" Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}"/>
         <ShellContent Title="Cuenta" Icon="tab_cuenta.png" Route="CuentaPage" ContentTemplate="{DataTemplate local:CuentaPage}" />
+        <ShellContent Title="Categoria" Icon="tab_categoria.png" Route="CategoriaPage" ContentTemplate="{DataTemplate local:CategoriaPage}"/>
         <ShellContent Title="About" Icon="tab_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
     </TabBar>
 </Shell>

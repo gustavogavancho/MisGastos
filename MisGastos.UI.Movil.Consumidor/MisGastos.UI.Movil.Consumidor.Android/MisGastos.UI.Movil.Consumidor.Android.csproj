@@ -93,7 +93,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tab_home.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MisGastos.COMMON\MisGastos.COMMON.csproj">
       <Project>{941AA4DD-EEC3-487A-882E-088BF268840F}</Project>

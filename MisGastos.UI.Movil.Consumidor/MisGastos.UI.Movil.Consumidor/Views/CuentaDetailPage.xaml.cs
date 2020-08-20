@@ -1,11 +1,5 @@
-﻿using MisGastos.COMMON.Entidades;
-using MisGastos.UI.Movil.Consumidor.Utility;
+﻿using MisGastos.UI.Movil.Consumidor.Utility;
 using MisGastos.UI.Movil.Consumidor.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -28,8 +22,6 @@ namespace MisGastos.UI.Movil.Consumidor.Views
         {
             base.OnAppearing();
 
-            //execute OnAppearingCommand
-            // informing ViewModel
             ((CuentaDetailViewModel)this.BindingContext)
                     .OnApperaringCommand.Execute(null);
         }
@@ -37,8 +29,7 @@ namespace MisGastos.UI.Movil.Consumidor.Views
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            // execute OnDisappearingCommand        
-            // informing ViewModel
+
             ((CuentaDetailViewModel)this.BindingContext)
                     .OnDisappearingCommand.Execute(null);
         }

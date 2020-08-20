@@ -189,4 +189,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\tab_cuenta.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tab_home.png" />
+  </ItemGroup>
 </Project>

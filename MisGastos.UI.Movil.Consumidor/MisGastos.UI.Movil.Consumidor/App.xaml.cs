@@ -1,8 +1,5 @@
 ﻿using MisGastos.BIZ;
-using MisGastos.UI.Movil.Consumidor.Views;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace MisGastos.UI.Movil.Consumidor
 {

@@ -1,12 +1,6 @@
 ﻿using MisGastos.UI.Movil.Consumidor.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace MisGastos.UI.Movil.Consumidor
 {
@@ -16,6 +10,9 @@ namespace MisGastos.UI.Movil.Consumidor
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(CuentaDetailPage), typeof(CuentaDetailPage));
+            Routing.RegisterRoute(nameof(RegistrarIngresoPage), typeof(RegistrarIngresoPage));
+            Routing.RegisterRoute(nameof(RegistrarEgresoPage), typeof(RegistrarEgresoPage));
+            Routing.RegisterRoute(nameof(CategoriaDetailPage), typeof(CategoriaDetailPage));
         }
     }
 }

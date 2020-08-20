@@ -9,5 +9,20 @@ namespace MisGastos.UI.Movil.Consumidor.Utility
 
         public static CuentaDetailViewModel CuentaDetailViewModel { get; set; } =
             new CuentaDetailViewModel(App.FactoryManager);
+
+        public static HomeViewModel HomeViewModel { get; set; } =
+            new HomeViewModel(App.FactoryManager);
+
+        public static CategoriaViewModel CategoriaViewModel { get; set; } =
+            new CategoriaViewModel(App.FactoryManager);
+
+        public static RegistrarIngresoViewModel RegistrarIngresoViewModel { get; set; } =
+            new RegistrarIngresoViewModel(App.FactoryManager);
+
+        public static RegistrarEgresoViewModel RegistrarEgresoViewModel { get; set; } =
+            new RegistrarEgresoViewModel(App.FactoryManager);
+
+        public static CategoriaDetailViewModel CategoriaDetailViewModel { get; set; } =
+            new CategoriaDetailViewModel(App.FactoryManager);
     }
 }
