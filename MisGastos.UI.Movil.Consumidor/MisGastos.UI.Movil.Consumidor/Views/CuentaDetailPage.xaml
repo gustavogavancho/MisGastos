@@ -3,6 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MisGastos.UI.Movil.Consumidor.Views.CuentaDetailPage"
              Title="{Binding Title}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False"/>
+    </Shell.BackButtonBehavior>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Guardar" Command="{Binding GuardarCuentaCommand}"/>
         <ToolbarItem Text="Eliminar" Command="{Binding EliminarCuentaCommand}" IsEnabled="{Binding HabilitarEliminar}"/>
