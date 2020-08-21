@@ -12,28 +12,32 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Text="Lista de categorias"/>
-
-        <ListView x:Name="CuentaListView" HasUnevenRows="True" CachingStrategy="RecycleElement" Grid.Row="1"
-                  SelectionMode="Single">
+        <ListView x:Name="CuentaListView" HasUnevenRows="True" CachingStrategy="RecycleElement" Grid.Row="0"
+                  SelectionMode="Single" ItemsSource="{Binding Categorias}" SeparatorVisibility="Default">
+            <ListView.Behaviors>
+                <behavior:EventToCommandBehavior
+                    EventName="ItemTapped"
+                    Command="{Binding CategoriaSelectedCommnad}"
+                    EventArgsConverter="{StaticResource LocalItemTappedConverter}"/>
+            </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid HeightRequest="100"  Margin="5" BackgroundColor="White" RowSpacing="2">
+                        <Grid HeightRequest="35"  Margin="5" BackgroundColor="White">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="35"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="125"></ColumnDefinition>
+                                <ColumnDefinition Width="30"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <!--<ColumnDefinition Width="60"></ColumnDefinition>-->
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Row="0" HeightRequest="125" VerticalOptions="Start" Margin="2,2,1,2"></Image>
-                            <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding Nombre}" Margin="3" ></Label>
+                            <Image Grid.Row="0" HeightRequest="30" VerticalOptions="Start"  Source="{Binding ImageUrl}"></Image>
+                            <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding Nombre}" ></Label>
+                            <!--<Label Grid.Row="0" Grid.Column="2" VerticalTextAlignment="Center" HorizontalOptions="End" Text="{Binding TipoCategoria}"/>-->
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

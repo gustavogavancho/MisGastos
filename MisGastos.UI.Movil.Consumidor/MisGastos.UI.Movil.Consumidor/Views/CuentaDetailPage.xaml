@@ -9,7 +9,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Guardar" Command="{Binding GuardarCuentaCommand}"/>
-        <ToolbarItem Text="Eliminar" Command="{Binding EliminarCuentaCommand}" IsEnabled="{Binding HabilitarEliminar}"/>
+        <ToolbarItem Text="Eliminar" Command="{Binding EliminarCuentaCommand}" />
     </ContentPage.ToolbarItems>
     
     <Grid>

@@ -12,15 +12,15 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 {
     public class CuentaViewModel : BaseViewModel
     {
-        private ObservableCollection<Cuenta> _cuenta;
+        private ObservableCollection<Cuenta> _cuentas;
 
         FactoryManager _factoryManager;
         ICuentaManager _cuentaManager;
 
         public ObservableCollection<Cuenta> Cuentas
         {
-            get => _cuenta;
-            set => SetProperty(ref _cuenta, value);
+            get => _cuentas;
+            set => SetProperty(ref _cuentas, value);
         }
 
         public Command AgregarCuentaCommand { get; }
@@ -44,7 +44,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             await Shell.Current.GoToAsync($"{nameof(CuentaDetailPage)}?{nameof(CuentaDetailViewModel.CuentaId)}={cuenta.Id}");
         }
 
-        private void OnCuentaChanged(CuentaDetailViewModel sender, Cuenta pie)
+        private void OnCuentaChanged(CuentaDetailViewModel sender, Cuenta cuenta)
         {
             Cuentas = new ObservableCollection<Cuenta>(_cuentaManager.ObtenerTodo.ToObservableCollection());
         }

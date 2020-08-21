@@ -28,5 +28,6 @@
         <ShellContent Title="Cuenta" Icon="tab_cuenta.png" Route="CuentaPage" ContentTemplate="{DataTemplate local:CuentaPage}" />
         <ShellContent Title="Categoria" Icon="tab_categoria.png" Route="CategoriaPage" ContentTemplate="{DataTemplate local:CategoriaPage}"/>
         <ShellContent Title="Acerca de" Icon="tab_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Configuraciones" Icon="tab_configuraciones.png" Route="ConfiguracionesPage" ContentTemplate="{DataTemplate local:ConfiguracionesPage}"/>
     </TabBar>
 </Shell>

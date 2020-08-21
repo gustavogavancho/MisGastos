@@ -24,5 +24,8 @@ namespace MisGastos.UI.Movil.Consumidor.Utility
 
         public static CategoriaDetailViewModel CategoriaDetailViewModel { get; set; } =
             new CategoriaDetailViewModel(App.FactoryManager);
+
+        public static ConfiguracionesViewModel ConfiguracionesViewModel { get; set; } =
+            new ConfiguracionesViewModel(App.FactoryManager);
     }
 }

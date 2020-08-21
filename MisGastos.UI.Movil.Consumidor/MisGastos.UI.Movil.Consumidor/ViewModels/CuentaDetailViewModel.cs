@@ -79,6 +79,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 await GoBack();
             }
         }
+
         private async Task GoBack()
         {
             Shell.Current.Navigating -= Current_Navigating;

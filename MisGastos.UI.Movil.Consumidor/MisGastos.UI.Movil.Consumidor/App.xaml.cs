@@ -12,6 +12,7 @@ namespace MisGastos.UI.Movil.Consumidor
             InitializeComponent();
 
             SeedData.SeedCuenta();
+            SeedData.SeedCategoria();
             MainPage = new AppShell();
         }
 

@@ -192,4 +192,61 @@
   <ItemGroup>
     <BundleResource Include="Resources\tab_home.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_bills.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_cars.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_clothes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_comunicaciones.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_limpieza.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_taxi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_deportes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_mascotas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_casa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_salud.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_regalos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_comida.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_entretenimiento.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_restaurantes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_depositos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_ahorros.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_sueldo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_transporte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tab_configuraciones.png" />
+  </ItemGroup>
 </Project>

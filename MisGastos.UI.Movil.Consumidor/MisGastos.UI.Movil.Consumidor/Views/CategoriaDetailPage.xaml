@@ -3,11 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MisGastos.UI.Movil.Consumidor.Views.CategoriaDetailPage"
              Title="{Binding Title}">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding RegresarCommand}"/>
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Guardar" Command="{Binding GuardarCategoriaCommnad}"/>
+        <ToolbarItem Text="Eliminar" Command="{Binding EliminarCategoriaCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout>
+        <Picker Title="Tipo de categoria" ItemsSource="{Binding TipoCategoria}" SelectedItem="{Binding Categoria.TipoCategoria}"
+                />
+        <Entry Text="{Binding Categoria.Nombre}"
+               Placeholder="Nombre categoria"/>
+    </StackLayout>
 </ContentPage>
