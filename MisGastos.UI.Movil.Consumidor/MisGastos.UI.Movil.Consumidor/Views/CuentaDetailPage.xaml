@@ -16,9 +16,30 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Text="Información cuenta:" Grid.Row="0"/>
         <Entry Placeholder="Nombre cuenta" Grid.Row="1" Text="{Binding Cuenta.Nombre}"/>
+
+        <CollectionView ItemsSource="{Binding ImageList}"
+                        SelectionMode="Single"
+                        Grid.Row="2"
+                        HorizontalOptions="Center"
+                        SelectedItem="{Binding Cuenta.ImageUrl}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10" Padding="2">
+                        <Image Grid.RowSpan="2"
+                               Source="{Binding}"
+                               HeightRequest="60"
+                               />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </Grid>
 </ContentPage>

@@ -12,6 +12,15 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
         static ICuentaManager _cuentaManager = _factoryManager.CuentaManager();
         static ICategoriaManager _categoriaManager = _factoryManager.CategoriaManager();
 
+        public static void VaciarCuenta()
+        {
+            var cuentaEliminar = _cuentaManager.ObtenerTodo;
+            foreach (var item in cuentaEliminar)
+            {
+                _cuentaManager.Eliminar(item.Id);
+            }
+        }
+
         public static void SeedCuenta()
         {
             if (_cuentaManager.ObtenerTodo.Count() <= 0)
@@ -21,11 +30,13 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
                     new Cuenta
                     {
                         Nombre = "Efectivo",
+                        ImageUrl = "icon_efectivo.png"
                     },
 
                     new Cuenta
                     {
                         Nombre = "Tarjeta Debidto",
+                        ImageUrl = "icon_tarjetasueldo",
                     },
 
                 };
@@ -37,14 +48,17 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
             }
         }
 
-        public static void SeedCategoria()
+        public static void VaciarCategoria()
         {
-            var cuenta = _categoriaManager.ObtenerTodo;
-            foreach (var item in cuenta)
+            var categoriaEliminar = _categoriaManager.ObtenerTodo;
+            foreach (var item in categoriaEliminar)
             {
                 _categoriaManager.Eliminar(item.Id);
             }
+        }
 
+        public static void SeedCategoria()
+        {
             if (_categoriaManager.ObtenerTodo.Count() <= 0)
             {
                 Categoria[] Categorias = new Categoria[]

@@ -17,6 +17,15 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
             "icon_salud.png",
             "icon_casa.png",
             "icon_mascotas.png",
+            "icon_deportes.png",
+            "icon_taxi.png",
+            "icon_limpieza.png",
+            "icon_transporte.png",
+            "icon_depositos.png",
+            "icon_sueldo.png",
+            "icon_ahorros.png",
+            "icon_efectivo.png",
+            "icon_tarjetasueldo",
         };
     }
 }

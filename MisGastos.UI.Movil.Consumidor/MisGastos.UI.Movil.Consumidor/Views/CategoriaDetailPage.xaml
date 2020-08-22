@@ -28,7 +28,7 @@
                         SelectionMode="Single"
                         Grid.Row="2"
                         HorizontalOptions="Center"
-                        SelectedItem="{Binding ImagenListSelected}">
+                        SelectedItem="{Binding Categoria.ImageUrl}">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                                  Span="5"/>
@@ -44,18 +44,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <!--<ListView x:Name="ImageListView" HasUnevenRows="True" CachingStrategy="RecycleElement" Grid.Row="2"
-                      SelectionMode="Single" ItemsSource="{Binding ImageList}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell >
-                        <FlexLayout>
-                            <Image Grid.Row="0" HeightRequest="30" VerticalOptions="Start"  Source="{Binding}"/>
-                        </FlexLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
     </Grid>
 </ContentPage>

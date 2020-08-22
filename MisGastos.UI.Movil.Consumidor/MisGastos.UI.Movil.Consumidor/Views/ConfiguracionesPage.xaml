@@ -5,9 +5,8 @@
              Title="{Binding Title}">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Restaurar valores predeterminados"/>
+            <Button Text="Restaurar" Command="{Binding RestaurarValoresPredeterminadosCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

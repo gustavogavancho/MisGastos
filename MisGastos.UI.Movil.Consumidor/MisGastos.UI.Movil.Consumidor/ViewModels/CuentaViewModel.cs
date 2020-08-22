@@ -57,7 +57,6 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         private async void OnAgregarCuenta(object obj)
         {
             await Shell.Current.GoToAsync(nameof(CuentaDetailPage));
-            //await Shell.Current.Navigation.PushModalAsync(new CuentaDetailPage());
         }
     }
 }

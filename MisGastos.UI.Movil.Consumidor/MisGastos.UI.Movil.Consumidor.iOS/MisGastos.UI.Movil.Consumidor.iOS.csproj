@@ -249,4 +249,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\tab_configuraciones.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_efectivo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_tarjetasueldo.png" />
+  </ItemGroup>
 </Project>

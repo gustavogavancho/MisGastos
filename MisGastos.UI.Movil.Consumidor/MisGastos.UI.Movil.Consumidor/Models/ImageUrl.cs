@@ -1,4 +1,4 @@
-﻿namespace MisGastos.COMMON.Models
+﻿namespace MisGastos.UI.Movil.Consumidor.Models
 {
     public class ImageUrl
     {

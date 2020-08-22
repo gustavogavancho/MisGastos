@@ -1,8 +1,10 @@
 ﻿using MisGastos.BIZ;
 using MisGastos.COMMON.Entidades;
 using MisGastos.COMMON.Interfaces;
+using MisGastos.UI.Movil.Consumidor.Helpers;
 using MisGastos.UI.Movil.Consumidor.Utility;
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -17,6 +19,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
         private Cuenta _cuenta;
         private string _cuentaId;
+        private ObservableCollection<string> _imageList;
 
         public Cuenta Cuenta
         {
@@ -26,8 +29,6 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
         public string CuentaId
         {
-            //get => _cuentaId;
-            //set => SetProperty(ref _cuentaId, value);
             get
             {
                 return _cuentaId;
@@ -38,6 +39,12 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 LoadCuentaId(value);
             }
 
+        }
+
+        public ObservableCollection<string> ImageList
+        {
+            get => _imageList;
+            set => SetProperty(ref _imageList, value);
         }
 
         public Command GuardarCuentaCommand { get; }
@@ -56,6 +63,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             RegresarCommand = new Command(OnRegresar);
             OnApperaringCommand = new Command(OnApperaring);
             OnDisappearingCommand = new Command(OnDisappearing);
+            ImageList = ImagePath.ImagesUrlPath;
             ActualizarDatos();
         }
 
