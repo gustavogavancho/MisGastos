@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MisGastos.UI.Movil.Consumidor.Views.CategoriaDetailPage"
              Title="{Binding Title}">
-    
+
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding RegresarCommand}"/>
     </Shell.BackButtonBehavior>
@@ -12,11 +12,50 @@
         <ToolbarItem Text="Guardar" Command="{Binding GuardarCategoriaCommnad}"/>
         <ToolbarItem Text="Eliminar" Command="{Binding EliminarCategoriaCommand}"/>
     </ContentPage.ToolbarItems>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <StackLayout>
-        <Picker Title="Tipo de categoria" ItemsSource="{Binding TipoCategoria}" SelectedItem="{Binding Categoria.TipoCategoria}"
-                />
-        <Entry Text="{Binding Categoria.Nombre}"
+        <Picker Title="Tipo de categoria" ItemsSource="{Binding TipoCategoria}" 
+                SelectedItem="{Binding Categoria.TipoCategoria}" Grid.Row="0"/>
+        <Entry Text="{Binding Categoria.Nombre}" Grid.Row="1"
                Placeholder="Nombre categoria"/>
-    </StackLayout>
+
+        <CollectionView ItemsSource="{Binding ImageList}"
+                        SelectionMode="Single"
+                        Grid.Row="2"
+                        HorizontalOptions="Center"
+                        SelectedItem="{Binding ImagenListSelected}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="10" Padding="2">
+                        <Image Grid.RowSpan="2"
+                               Source="{Binding}"
+                               HeightRequest="60"
+                               />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!--<ListView x:Name="ImageListView" HasUnevenRows="True" CachingStrategy="RecycleElement" Grid.Row="2"
+                      SelectionMode="Single" ItemsSource="{Binding ImageList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell >
+                        <FlexLayout>
+                            <Image Grid.Row="0" HeightRequest="30" VerticalOptions="Start"  Source="{Binding}"/>
+                        </FlexLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
+    </Grid>
 </ContentPage>

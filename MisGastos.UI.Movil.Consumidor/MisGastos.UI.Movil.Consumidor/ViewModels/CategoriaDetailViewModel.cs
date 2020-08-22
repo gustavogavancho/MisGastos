@@ -2,9 +2,11 @@
 using MisGastos.COMMON.Entidades;
 using MisGastos.COMMON.Enumeraciones;
 using MisGastos.COMMON.Interfaces;
+using MisGastos.UI.Movil.Consumidor.Entensions;
 using MisGastos.UI.Movil.Consumidor.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +23,8 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         private Categoria _categoria;
         private string _categoriaId;
         private IEnumerable<TipoCategoria> _tipoCategoria;
+        private ObservableCollection<string> _imageList;
+        private string _imageListSelected;
 
         public IEnumerable<TipoCategoria> TipoCategoria
         {
@@ -48,6 +52,19 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             }
         }
 
+        public ObservableCollection<string> ImageList
+        {
+            get => _imageList;
+            set => SetProperty(ref _imageList, value);
+        }
+
+        public string ImagenListSelected
+        {
+            get => _imageListSelected = Categoria.ImageUrl;
+            set => SetProperty(ref _imageListSelected, value);
+        }
+
+
         public Command GuardarCategoriaCommnad { get;  }
         public Command EliminarCategoriaCommand { get;  }
         public Command RegresarCommand { get; set; }
@@ -64,12 +81,14 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             RegresarCommand = new Command(OnRegresar);
             OnApperaringCommand = new Command(OnApperaring);
             OnDisappearingCommand = new Command(OnDisappearing);
+            ImageList = _categoriaManager.ObtenerTodo.Select(x => x.ImageUrl).ToObservableCollection();
             ActualizarDatos();
         }
 
         private void OnApperaring(object obj)
         {
             Shell.Current.Navigating += Current_Navigating;
+            var selectd = ImagenListSelected;
         }
 
         private void OnDisappearing(object obj)

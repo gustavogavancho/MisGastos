@@ -39,11 +39,11 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
 
         public static void SeedCategoria()
         {
-            //var cuenta = _categoriaManager.ObtenerTodo;
-            //foreach (var item in cuenta)
-            //{
-            //    _categoriaManager.Eliminar(item.Id);
-            //}
+            var cuenta = _categoriaManager.ObtenerTodo;
+            foreach (var item in cuenta)
+            {
+                _categoriaManager.Eliminar(item.Id);
+            }
 
             if (_categoriaManager.ObtenerTodo.Count() <= 0)
             {
