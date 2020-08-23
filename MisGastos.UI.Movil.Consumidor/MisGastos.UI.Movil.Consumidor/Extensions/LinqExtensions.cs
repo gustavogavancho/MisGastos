@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace MisGastos.UI.Movil.Consumidor.Entensions
+namespace MisGastos.UI.Movil.Consumidor.Extensions
 {
     public static class LinqExtensions
     {

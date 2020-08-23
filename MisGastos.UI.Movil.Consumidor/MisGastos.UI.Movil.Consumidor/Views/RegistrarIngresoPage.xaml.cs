@@ -16,5 +16,21 @@ namespace MisGastos.UI.Movil.Consumidor.Views
             InitializeComponent();
             BindingContext = _viewModel = ViewModelLocator.RegistrarIngresoViewModel;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            ((RegistrarIngresoViewModel)this.BindingContext)
+                .OnApperaringCommand.Execute(null);
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            ((RegistrarIngresoViewModel)this.BindingContext)
+                .OnDisappearingCommand.Execute(null);
+        }
     }
 }

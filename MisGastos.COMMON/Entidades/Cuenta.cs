@@ -4,5 +4,6 @@
     {
         public string Nombre { get; set; }
         public string ImageUrl { get; set; }
+        public decimal Balance { get; set; }
     }
 }

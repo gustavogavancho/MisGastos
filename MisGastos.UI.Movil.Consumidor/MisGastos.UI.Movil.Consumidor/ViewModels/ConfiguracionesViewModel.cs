@@ -29,6 +29,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 SeedData.SeedCuenta();
                 SeedData.VaciarCategoria();
                 SeedData.SeedCategoria();
+                SeedData.VaciarMovimiento();
 
                 MessagingCenter.Send(this, MessageNames.CategoriaChangedMessage, new Categoria());
                 MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, new Cuenta());

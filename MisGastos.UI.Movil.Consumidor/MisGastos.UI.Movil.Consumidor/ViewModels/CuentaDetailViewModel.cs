@@ -133,6 +133,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         {
             if (string.IsNullOrEmpty(Cuenta.Id))
             {
+                Cuenta.Balance = 0.0M;
                 _cuentaManager.Insertar(Cuenta);
             }
             else

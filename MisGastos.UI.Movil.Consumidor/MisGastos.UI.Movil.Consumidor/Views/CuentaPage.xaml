@@ -34,10 +34,11 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="30"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
-                                <!--<ColumnDefinition Width="60"></ColumnDefinition>-->
+                                <ColumnDefinition Width="60"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Image Grid.Row="0" HeightRequest="30" VerticalOptions="Start"  Source="{Binding ImageUrl}"></Image>
                             <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding Nombre}" ></Label>
+                            <Label Grid.Row="0" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding Balance}"/>
                             <!--<Label Grid.Row="0" Grid.Column="2" VerticalTextAlignment="Center" HorizontalOptions="End" Text="{Binding TipoCategoria}"/>-->
                         </Grid>
                     </ViewCell>

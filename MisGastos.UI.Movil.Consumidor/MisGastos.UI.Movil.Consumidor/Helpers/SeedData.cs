@@ -11,6 +11,7 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
         static FactoryManager _factoryManager = App.FactoryManager;
         static ICuentaManager _cuentaManager = _factoryManager.CuentaManager();
         static ICategoriaManager _categoriaManager = _factoryManager.CategoriaManager();
+        static IMovimientoManager _movimientoManager = _factoryManager.MovimientoManager();
 
         public static void VaciarCuenta()
         {
@@ -30,13 +31,15 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
                     new Cuenta
                     {
                         Nombre = "Efectivo",
-                        ImageUrl = "icon_efectivo.png"
+                        ImageUrl = "icon_efectivo.png",
+                        Balance = 0.0M,
                     },
 
                     new Cuenta
                     {
-                        Nombre = "Tarjeta Debidto",
+                        Nombre = "Tarjeta Débito",
                         ImageUrl = "icon_tarjetasueldo",
+                        Balance = 0.0M,
                     },
 
                 };
@@ -194,6 +197,15 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
                 {
                     _categoriaManager.Insertar(categoria);
                 }
+            }
+        }
+
+        public static void VaciarMovimiento()
+        {
+            var movimientoAEliminar = _movimientoManager.ObtenerTodo;
+            foreach (var item in movimientoAEliminar)
+            {
+                _movimientoManager.Eliminar(item.Id);
             }
         }
     }

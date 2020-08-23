@@ -16,14 +16,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Text="Información cuenta:" Grid.Row="0"/>
         <Entry Placeholder="Nombre cuenta" Grid.Row="1" Text="{Binding Cuenta.Nombre}"/>
 
+        <Label Grid.Row="2"
+               Text="Seleccionar icono"/>
+        
         <CollectionView ItemsSource="{Binding ImageList}"
                         SelectionMode="Single"
-                        Grid.Row="2"
+                        Grid.Row="3"
                         HorizontalOptions="Center"
                         SelectedItem="{Binding Cuenta.ImageUrl}">
             <CollectionView.ItemsLayout>

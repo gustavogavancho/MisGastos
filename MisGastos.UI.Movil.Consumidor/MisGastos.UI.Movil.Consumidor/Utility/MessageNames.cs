@@ -4,5 +4,6 @@
     {
         public const string CuentaChangedMessage = "CuentaChanged";
         public const string CategoriaChangedMessage = "CategoriaChanged";
+        public const string MovimientoChangedMessage = "MovimientoChanged";
     }
 }

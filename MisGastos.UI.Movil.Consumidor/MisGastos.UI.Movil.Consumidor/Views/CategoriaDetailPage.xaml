@@ -16,6 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -24,9 +25,12 @@
         <Entry Text="{Binding Categoria.Nombre}" Grid.Row="1"
                Placeholder="Nombre categoria"/>
 
+        <Label Grid.Row="2"
+               Text="Seleccionar icono"/>
+
         <CollectionView ItemsSource="{Binding ImageList}"
                         SelectionMode="Single"
-                        Grid.Row="2"
+                        Grid.Row="3"
                         HorizontalOptions="Center"
                         SelectedItem="{Binding Categoria.ImageUrl}">
             <CollectionView.ItemsLayout>

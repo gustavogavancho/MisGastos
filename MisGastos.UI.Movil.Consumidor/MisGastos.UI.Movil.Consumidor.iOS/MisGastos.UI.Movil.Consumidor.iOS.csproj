@@ -255,4 +255,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\icon_tarjetasueldo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_transacciones.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_egreso.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_ingreso.png" />
+  </ItemGroup>
 </Project>

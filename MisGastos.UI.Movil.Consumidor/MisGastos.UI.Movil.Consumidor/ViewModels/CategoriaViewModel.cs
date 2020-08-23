@@ -1,7 +1,7 @@
 ﻿using MisGastos.BIZ;
 using MisGastos.COMMON.Entidades;
 using MisGastos.COMMON.Interfaces;
-using MisGastos.UI.Movil.Consumidor.Entensions;
+using MisGastos.UI.Movil.Consumidor.Extensions;
 using MisGastos.UI.Movil.Consumidor.Utility;
 using MisGastos.UI.Movil.Consumidor.Views;
 using System;

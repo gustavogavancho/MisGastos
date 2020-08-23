@@ -1,7 +1,7 @@
 ﻿using MisGastos.BIZ;
 using MisGastos.COMMON.Entidades;
 using MisGastos.COMMON.Interfaces;
-using MisGastos.UI.Movil.Consumidor.Entensions;
+using MisGastos.UI.Movil.Consumidor.Extensions;
 using MisGastos.UI.Movil.Consumidor.Utility;
 using MisGastos.UI.Movil.Consumidor.Views;
 using System;
@@ -37,6 +37,13 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
             MessagingCenter.Subscribe<CuentaDetailViewModel, Cuenta>
                 (this, MessageNames.CuentaChangedMessage, OnCuentaChanged);
+            MessagingCenter.Subscribe<RegistrarIngresoViewModel, Cuenta>
+                (this, MessageNames.CuentaChangedMessage, OnCuentaUpdated);
+        }
+
+        private void OnCuentaUpdated(RegistrarIngresoViewModel sender, Cuenta cuenta)
+        {
+            Cuentas = new ObservableCollection<Cuenta>(_cuentaManager.ObtenerTodo.ToObservableCollection());
         }
 
         private async void OnCuentaSelected(Cuenta cuenta)
