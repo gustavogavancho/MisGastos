@@ -2,6 +2,6 @@
 {
     public class Balance : BaseDTO
     {
-        public string BalanceGeneral { get; set; }
+        public decimal BalanceGeneral { get; set; }
     }
 }

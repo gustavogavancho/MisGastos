@@ -47,5 +47,15 @@ namespace MisGastos.BIZ
             }
         }
 
+        public IBalanceManager BalanceManager()
+        {
+            switch(_origen)
+            {
+                case "LiteDB":
+                    return new BalanceManager(new GenericRepository<Balance>(new BalanceValidator()));
+                default:
+                    return null;
+            }
+        }
     }
 }

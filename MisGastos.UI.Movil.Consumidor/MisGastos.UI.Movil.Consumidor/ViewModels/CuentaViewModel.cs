@@ -39,6 +39,14 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 (this, MessageNames.CuentaChangedMessage, OnCuentaChanged);
             MessagingCenter.Subscribe<RegistrarIngresoViewModel, Cuenta>
                 (this, MessageNames.CuentaChangedMessage, OnCuentaUpdated);
+            MessagingCenter.Subscribe<RegistrarEgresoViewModel, Cuenta>
+                (this, MessageNames.CuentaChangedMessage, OnCuentaEgresoUpdated);
+
+        }
+
+        private void OnCuentaEgresoUpdated(RegistrarEgresoViewModel arg1, Cuenta arg2)
+        {
+            Cuentas = new ObservableCollection<Cuenta>(_cuentaManager.ObtenerTodo.ToObservableCollection());
         }
 
         private void OnCuentaUpdated(RegistrarIngresoViewModel sender, Cuenta cuenta)

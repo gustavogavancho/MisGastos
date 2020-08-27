@@ -17,5 +17,21 @@ namespace MisGastos.UI.Movil.Consumidor.Views
 
             BindingContext = _viewModel = ViewModelLocator.RegistrarEgresoViewModel;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            ((RegistrarEgresoViewModel)this.BindingContext)
+                .OnApperaringCommand.Execute(null);
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            ((RegistrarEgresoViewModel)this.BindingContext)
+                .OnDisappearingCommand.Execute(null);
+        }
     }
 }

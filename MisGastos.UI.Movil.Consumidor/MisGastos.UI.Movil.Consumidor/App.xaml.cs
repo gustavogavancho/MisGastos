@@ -16,6 +16,7 @@ namespace MisGastos.UI.Movil.Consumidor
             //SeedData.VaciarCategoria();
             SeedData.SeedCategoria();
             //SeedData.VaciarMovimiento();
+            SeedData.SeedBalance();
             MainPage = new AppShell();
         }
 

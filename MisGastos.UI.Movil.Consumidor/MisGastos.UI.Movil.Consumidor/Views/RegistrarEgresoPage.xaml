@@ -3,20 +3,83 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MisGastos.UI.Movil.Consumidor.Views.RegistrarEgresoPage"
              Title="{Binding Title}">
-    
+
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior />
+        <BackButtonBehavior Command="{Binding RegresarCommand}"/>
     </Shell.BackButtonBehavior>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Guardar" />
+        <ToolbarItem Text="Guardar" Command="{Binding GuardarMovimientoCommnad}"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Registar ingreso"/>
-            <Picker Title="Cuenta" />
-            <Entry Placeholder="Cantidad"/>
-        </StackLayout>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+
+                <Label Text="Cuentas"/>
+
+                <ListView x:Name="CuentaListView" HasUnevenRows="True" CachingStrategy="RecycleElement" Grid.Row="1"
+                          VerticalOptions="Start"
+                          ItemsSource="{Binding Cuentas}" SelectionMode="Single"
+                          SelectedItem="{Binding Cuenta}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid HeightRequest="35"  Margin="5" BackgroundColor="White" VerticalOptions="Start">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="35"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <!--<ColumnDefinition Width="60"></ColumnDefinition>-->
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Row="0" HeightRequest="30" VerticalOptions="Start"  Source="{Binding ImageUrl}"></Image>
+                                    <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding Nombre}" ></Label>
+                                    <!--<Label Grid.Row="0" Grid.Column="2" VerticalTextAlignment="Center" HorizontalOptions="End" Text="{Binding TipoCategoria}"/>-->
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Label Text="Categoria" Grid.Row="2"/>
+                <ListView x:Name="CategoriaListView" HasUnevenRows="True" CachingStrategy="RecycleElement" Grid.Row="3"
+                          VerticalOptions="Start"
+                          ItemsSource="{Binding Categorias}" SelectionMode="Single"
+                          SelectedItem="{Binding Categoria}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid HeightRequest="35"  Margin="5" BackgroundColor="White" VerticalOptions="Start">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="35"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <!--<ColumnDefinition Width="60"></ColumnDefinition>-->
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Row="0" HeightRequest="30" VerticalOptions="Start"  Source="{Binding ImageUrl}"></Image>
+                                    <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding Nombre}" ></Label>
+                                    <!--<Label Grid.Row="0" Grid.Column="2" VerticalTextAlignment="Center" HorizontalOptions="End" Text="{Binding TipoCategoria}"/>-->
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Entry Placeholder="Cantidad" Grid.Row="4" Text="{Binding Movimiento.Monto}"/>
+                <Entry Placeholder="Descripción" Grid.Row="5" Text="{Binding Movimiento.Descripcion}"/>
+            </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -19,11 +19,13 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         private Movimiento _movimiento;
         private Cuenta _cuenta;
         private Categoria _categoria;
+        private Balance _balance;
 
         FactoryManager _factoryManager;
         ICuentaManager _cuentaManager;
         ICategoriaManager _categoriaManager;
         IMovimientoManager _movimientoManager;
+        IBalanceManager _balanceManager;
 
         public ObservableCollection<Cuenta> Cuentas
         {
@@ -55,6 +57,13 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             set => SetProperty(ref _categoria, value);
         }
 
+        public Balance Balance
+        {
+            get => _balance;
+            set => SetProperty(ref _balance, value);
+        }
+
+
         public Command GuardarMovimientoCommnad { get; }
         public Command RegresarCommand { get; }
         public Command OnApperaringCommand { get; }
@@ -67,6 +76,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             _cuentaManager = _factoryManager.CuentaManager();
             _categoriaManager = factoryManager.CategoriaManager();
             _movimientoManager = factoryManager.MovimientoManager();
+            _balanceManager = factoryManager.BalanceManager();
             GuardarMovimientoCommnad = new Command(OnGuardarMovimineto);
             RegresarCommand = new Command(OnRegresar);
             OnApperaringCommand = new Command(OnApperaring);
@@ -122,14 +132,18 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             Movimiento.IdCuenta = Cuenta.Id;
             Movimiento.Fecha = DateTime.Now;
             Cuenta cuentaToEdit = _cuentaManager.SearchById(Cuenta.Id);
-            cuentaToEdit.Balance = Convert.ToDecimal(Movimiento.Monto);
+            cuentaToEdit.Balance += Convert.ToDecimal(Movimiento.Monto);
+            Balance balanceToEdit = _balanceManager.ObtenerTodo.FirstOrDefault();
+            balanceToEdit.BalanceGeneral += Convert.ToDecimal(Movimiento.Monto);
 
 
             _cuentaManager.Actualizar(cuentaToEdit);
+            _balanceManager.Actualizar(balanceToEdit);
             _movimientoManager.Insertar(Movimiento);
 
             MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
             MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, Movimiento);
+            MessagingCenter.Send(this, MessageNames.BalanceChangedMessage, Balance);
 
             await Shell.Current.Navigation.PopAsync();
 

@@ -21,6 +21,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="180"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
 
                 </Grid.RowDefinitions>
 
@@ -77,6 +78,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <Entry Placeholder="Cantidad" Grid.Row="4" Text="{Binding Movimiento.Monto}"/>
+                <Entry Placeholder="Descripción" Grid.Row="5" Text="{Binding Movimiento.Descripcion}"/>
             </Grid>
         </ScrollView>
     </ContentPage.Content>

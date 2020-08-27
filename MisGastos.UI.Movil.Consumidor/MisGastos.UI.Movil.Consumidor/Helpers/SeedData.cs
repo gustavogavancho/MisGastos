@@ -12,6 +12,7 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
         static ICuentaManager _cuentaManager = _factoryManager.CuentaManager();
         static ICategoriaManager _categoriaManager = _factoryManager.CategoriaManager();
         static IMovimientoManager _movimientoManager = _factoryManager.MovimientoManager();
+        static IBalanceManager _balanceManager = _factoryManager.BalanceManager();
 
         public static void VaciarCuenta()
         {
@@ -206,6 +207,24 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
             foreach (var item in movimientoAEliminar)
             {
                 _movimientoManager.Eliminar(item.Id);
+            }
+        }
+
+        public static void SeedBalance()
+        {
+            if (_balanceManager.ObtenerTodo.Count() <= 0)
+            {
+                Balance balance = new Balance { BalanceGeneral = 0.0M };
+                _balanceManager.Insertar(balance);
+            }
+        }
+        
+        public static void VaciarBalance()
+        {
+            var balanceEliminar = _balanceManager.ObtenerTodo;
+            foreach (var item in balanceEliminar)
+            {
+                _balanceManager.Eliminar(item.Id);
             }
         }
     }

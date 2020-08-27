@@ -2,8 +2,6 @@
 using MisGastos.COMMON.Entidades;
 using MisGastos.UI.Movil.Consumidor.Helpers;
 using MisGastos.UI.Movil.Consumidor.Utility;
-using MisGastos.UI.Movil.Consumidor.Views;
-using System;
 using Xamarin.Forms;
 
 namespace MisGastos.UI.Movil.Consumidor.ViewModels
@@ -30,9 +28,12 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 SeedData.VaciarCategoria();
                 SeedData.SeedCategoria();
                 SeedData.VaciarMovimiento();
+                SeedData.VaciarBalance();
+                SeedData.SeedBalance();
 
                 MessagingCenter.Send(this, MessageNames.CategoriaChangedMessage, new Categoria());
                 MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, new Cuenta());
+                MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, new Cuenta());
                 System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
                 App.Current.MainPage = new AppShell();
 
