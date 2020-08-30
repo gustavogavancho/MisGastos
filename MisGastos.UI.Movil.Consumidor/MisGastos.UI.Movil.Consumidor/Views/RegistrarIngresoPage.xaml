@@ -10,6 +10,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Guardar" Command="{Binding GuardarMovimientoCommnad}"/>
+        <ToolbarItem Text="Eliminar" Command="{Binding EliminarMovimientoCommand}" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>

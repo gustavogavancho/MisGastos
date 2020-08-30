@@ -38,7 +38,6 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 _cuentaId = value;
                 LoadCuentaId(value);
             }
-
         }
 
         public ObservableCollection<string> ImageList
@@ -106,6 +105,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             try
             {
                 Cuenta = _cuentaManager.SearchById(cuentaId);
+
             }
             catch (Exception)
             {

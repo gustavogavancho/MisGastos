@@ -16,7 +16,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
     public class HomeViewModel : BaseViewModel
     {
         private ObservableCollection<Movimiento> _movimientos;
-        private decimal _balance;
+        private Balance _balance;
         private ObservableCollection<MovimientoModel> _movimientoModels;
 
         FactoryManager _factoryManager;
@@ -35,7 +35,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             set => SetProperty(ref _movimientos, value);
         }
 
-        public decimal Balance
+        public Balance Balance
         {
             get => _balance;
             set => SetProperty(ref _balance, value);
@@ -57,47 +57,59 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             _cuentaManager = factoryManager.CuentaManager();
             RegistrarIngresoCommnad = new Command(OnRegistrarIngreso);
             RegistrarEgresoCommand = new Command(OnRegistrarEgreso);
-            MovimientoSelectedCommand = new Command(OnMovimientoSelected);
+            MovimientoSelectedCommand = new Command<MovimientoModel>(OnMovimientoSelected);
             ActualizarDatos();
 
+            //Ingreso events
             MessagingCenter.Subscribe<RegistrarIngresoViewModel, Movimiento>
                 (this, MessageNames.MovimientoChangedMessage, OnMovimientoChanged);
             MessagingCenter.Subscribe<RegistrarIngresoViewModel, Balance>
                 (this, MessageNames.BalanceChangedMessage, OnBalanceChanged);
 
+            //Egreso events
             MessagingCenter.Subscribe<RegistrarEgresoViewModel, Movimiento>
                 (this, MessageNames.MovimientoChangedMessage, OnMovimientoEgresoChanged);
             MessagingCenter.Subscribe<RegistrarEgresoViewModel, Balance>
                 (this, MessageNames.BalanceChangedMessage, OnBalanceEgresoChanged);
+
+            //Config events
+            MessagingCenter.Subscribe<ConfiguracionesViewModel, Balance>
+                (this, MessageNames.BalanceChangedMessage, OnBalanceConfigChanged);
         }
 
-        private async void OnMovimientoSelected(object obj)
+
+        private async void OnMovimientoSelected(MovimientoModel movimientoModel)
         {
-            MovimientoModel check = (MovimientoModel)obj;
+            MovimientoModel check = movimientoModel;
             var categoria = _categoriaManager.SearchById(check.Movimiento.IdCategoria);
-            if (categoria.TipoCategoria == TipoCategoria.Gastos)
+            if (categoria.TipoCategoria == TipoCategoria.Ingresos)
+            {
+                await Shell.Current.GoToAsync($"{nameof(RegistrarIngresoPage)}?{nameof(RegistrarIngresoViewModel.MovimientoId)}={movimientoModel.Movimiento.Id}");
+            }
+            else if (categoria.TipoCategoria == TipoCategoria.Gastos)
             {
                 await Shell.Current.GoToAsync(nameof(RegistrarEgresoPage));
             }
-            else if (categoria.TipoCategoria == TipoCategoria.Ingresos)
-            {
-                await Shell.Current.GoToAsync(nameof(RegistrarIngresoPage));
-            }
         }
 
-        private void OnBalanceEgresoChanged(RegistrarEgresoViewModel arg1, Balance arg2)
-        {
-            Balance = _balanceManager.ObtenerTodo.FirstOrDefault().BalanceGeneral;
-        }
-
-        private void OnMovimientoEgresoChanged(RegistrarEgresoViewModel arg1, Movimiento arg2)
+        private void OnBalanceConfigChanged(ConfiguracionesViewModel arg1, Balance arg2)
         {
             ActualizarDatos();
         }
 
-        private void OnBalanceChanged(RegistrarIngresoViewModel arg1, Balance arg2)
+        private void OnBalanceEgresoChanged(RegistrarEgresoViewModel sender, Balance balance)
         {
-            Balance = _balanceManager.ObtenerTodo.FirstOrDefault().BalanceGeneral;
+            ActualizarDatos();
+        }
+
+        private void OnMovimientoEgresoChanged(RegistrarEgresoViewModel sender, Movimiento balance)
+        {
+            ActualizarDatos();
+        }
+
+        private void OnBalanceChanged(RegistrarIngresoViewModel sender, Balance balance)
+        {
+            ActualizarDatos();
         }
 
         private void OnMovimientoChanged(RegistrarIngresoViewModel sender, Movimiento movimiento)
@@ -108,7 +120,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         private void ActualizarDatos()
         {
             Movimientos = _movimientoManager.ObtenerTodo.ToObservableCollection();
-            Balance = _balanceManager.ObtenerTodo.FirstOrDefault().BalanceGeneral;
+            Balance = _balanceManager.ObtenerTodo.FirstOrDefault();
 
             MovimientoModels = new ObservableCollection<MovimientoModel>();
             foreach (var item in _movimientoManager.ObtenerTodo.ToObservableCollection())

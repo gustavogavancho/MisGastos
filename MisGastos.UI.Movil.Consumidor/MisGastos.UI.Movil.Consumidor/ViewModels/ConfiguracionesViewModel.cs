@@ -21,7 +21,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
         private async void OnRestaurarValoresPredeterminadosCommnad(object obj)
         {
-            if (await Shell.Current.DisplayAlert("Aviso", "¿Esta seguro que desea restablecer valores predeterminados? \nAdvertencia:\nLa aplicación se cerrara y tendra que volver a abrirla de ser si la respuesta.", "Si", "No"))
+            if (await Shell.Current.DisplayAlert("Aviso", "¿Esta seguro que desea restablecer valores predeterminados?", "Si", "No"))
             {
                 SeedData.VaciarCuenta();
                 SeedData.SeedCuenta();
@@ -34,8 +34,9 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 MessagingCenter.Send(this, MessageNames.CategoriaChangedMessage, new Categoria());
                 MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, new Cuenta());
                 MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, new Cuenta());
-                System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
-                App.Current.MainPage = new AppShell();
+                MessagingCenter.Send(this, MessageNames.BalanceChangedMessage, new Balance());
+                //System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+                //App.Current.MainPage = new AppShell();
 
             }
         }

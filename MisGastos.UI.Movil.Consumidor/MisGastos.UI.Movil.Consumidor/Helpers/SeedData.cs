@@ -214,7 +214,7 @@ namespace MisGastos.UI.Movil.Consumidor.Helpers
         {
             if (_balanceManager.ObtenerTodo.Count() <= 0)
             {
-                Balance balance = new Balance { BalanceGeneral = 0.0M };
+                Balance balance = new Balance { BalanceGeneral = 0.0M, Egresos = 0.0M, Ingresos = 0.0M };
                 _balanceManager.Insertar(balance);
             }
         }

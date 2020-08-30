@@ -42,26 +42,34 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             MessagingCenter.Subscribe<RegistrarEgresoViewModel, Cuenta>
                 (this, MessageNames.CuentaChangedMessage, OnCuentaEgresoUpdated);
 
+            //Config events
+            MessagingCenter.Subscribe<ConfiguracionesViewModel, Cuenta>
+                (this, MessageNames.CuentaChangedMessage, OnCuentaConfigChanged);
+
         }
 
-        private void OnCuentaEgresoUpdated(RegistrarEgresoViewModel arg1, Cuenta arg2)
+        private void OnCuentaConfigChanged(ConfiguracionesViewModel arg1, Cuenta arg2)
         {
-            Cuentas = new ObservableCollection<Cuenta>(_cuentaManager.ObtenerTodo.ToObservableCollection());
+            ActualizarDatos();
+        }
+
+        private void OnCuentaEgresoUpdated(RegistrarEgresoViewModel sender, Cuenta cuenta)
+        {
+            ActualizarDatos();
         }
 
         private void OnCuentaUpdated(RegistrarIngresoViewModel sender, Cuenta cuenta)
         {
-            Cuentas = new ObservableCollection<Cuenta>(_cuentaManager.ObtenerTodo.ToObservableCollection());
+            ActualizarDatos();
+        }
+        private void OnCuentaChanged(CuentaDetailViewModel sender, Cuenta cuenta)
+        {
+            ActualizarDatos();
         }
 
         private async void OnCuentaSelected(Cuenta cuenta)
         {
             await Shell.Current.GoToAsync($"{nameof(CuentaDetailPage)}?{nameof(CuentaDetailViewModel.CuentaId)}={cuenta.Id}");
-        }
-
-        private void OnCuentaChanged(CuentaDetailViewModel sender, Cuenta cuenta)
-        {
-            Cuentas = new ObservableCollection<Cuenta>(_cuentaManager.ObtenerTodo.ToObservableCollection());
         }
 
         private void ActualizarDatos()

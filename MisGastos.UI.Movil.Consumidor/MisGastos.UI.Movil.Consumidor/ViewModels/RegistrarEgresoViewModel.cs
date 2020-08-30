@@ -132,9 +132,10 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             Movimiento.IdCuenta = Cuenta.Id;
             Movimiento.Fecha = DateTime.Now;
             Cuenta cuentaToEdit = _cuentaManager.SearchById(Cuenta.Id);
-            cuentaToEdit.Balance -= Convert.ToDecimal(Movimiento.Monto);
+            cuentaToEdit.Balance -= Movimiento.Monto;
             Balance balanceToEdit = _balanceManager.ObtenerTodo.FirstOrDefault();
-            balanceToEdit.BalanceGeneral -= Convert.ToDecimal(Movimiento.Monto);
+            balanceToEdit.BalanceGeneral -= Movimiento.Monto;
+            balanceToEdit.Egresos -= Movimiento.Monto;
 
 
             _cuentaManager.Actualizar(cuentaToEdit);

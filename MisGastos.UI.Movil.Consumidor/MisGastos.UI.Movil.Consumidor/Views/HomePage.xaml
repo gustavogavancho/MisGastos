@@ -12,8 +12,18 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackLayout Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Start">
-            <Label Text="Balance"/>
-            <Label Text="{Binding Balance}"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Ingresos" FontAttributes="Bold"/>
+                <Label Margin="4,0,0,0" Text="{Binding Balance.Ingresos}" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Egresos:" FontAttributes="Bold"/>
+                <Label Margin="4,0,0,0" Text="{Binding Balance.Egresos}" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Balance:" FontAttributes="Bold"/>
+                <Label Text="{Binding Balance.BalanceGeneral}"/>
+            </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Button Text="+" Command="{Binding RegistrarIngresoCommnad}" />
                 <Button Text="-" Command="{Binding RegistrarEgresoCommand}"/>
@@ -22,8 +32,7 @@
         <Label Text="Lista transacciones" Grid.Row="1"/>
         
         <ListView x:Name="MovimientosListView" HasUnevenRows="True" CachingStrategy="RecycleElement" Grid.Row="2"
-                  VerticalOptions="Start"
-                  ItemsSource="{Binding MovimientoModels}" SelectionMode="Single">
+                  VerticalOptions="Start" ItemsSource="{Binding MovimientoModels}" SelectionMode="Single">
             <ListView.Behaviors>
                 <behavior:EventToCommandBehavior
                     EventName="ItemTapped"
@@ -45,12 +54,8 @@
                             </Grid.ColumnDefinitions>
                             <Image Grid.RowSpan="2" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Center"  Source="{Binding ImageUrl}"></Image>
                             <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding TipoCategoria}" ></Label>
-                            <Label Grid.RowSpan="2" Grid.Column="2" VerticalOptions="Center" Text="{Binding Movimiento.Monto, StringFormat='S/. {0:c}'}" HorizontalOptions="Center"></Label>
+                            <Label Grid.RowSpan="2" Grid.Column="2" VerticalOptions="Center" Text="{Binding Movimiento.Monto, StringFormat='{0:c}'}" HorizontalOptions="Center"></Label>
                             <Label Grid.Row="1" Grid.Column="1" VerticalOptions="Start" Text="{Binding DescripcionMovimiento}" ></Label>
-                            <!--<Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding TipoCategoria}" ></Label>-->
-                            <!--<Label Grid.Row="0" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding Monto}"/>-->
-                            <!--<Label Grid.Row="0" Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding Movimiento.Fecha, StringFormat='{0:d}'}"/>-->
-                            <!--<Label Grid.Row="0" Grid.Column="2" VerticalTextAlignment="Center" HorizontalOptions="End" Text="{Binding TipoCategoria}"/>-->
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
