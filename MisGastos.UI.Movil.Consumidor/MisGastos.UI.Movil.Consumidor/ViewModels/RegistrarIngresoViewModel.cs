@@ -103,23 +103,27 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
         private async void OnEliminarMovimiento(object obj)
         {
-            Cuenta cuentaToEdit = _cuentaManager.SearchById(Movimiento.IdCuenta);
-            cuentaToEdit.Balance -= Movimiento.Monto;
-            Balance balanceToEdit = _balanceManager.ObtenerTodo.FirstOrDefault();
-            balanceToEdit.Ingresos -= Movimiento.Monto;
-            balanceToEdit.BalanceGeneral -= Movimiento.Monto;
+            if (await Shell.Current.DisplayAlert("Aviso", $"¿Estas seguro de querer eliminar el movimiento \"{Movimiento.Descripcion}\"?", "Si", "No"))
+            {
+                Cuenta cuentaToEdit = _cuentaManager.SearchById(Movimiento.IdCuenta);
+                cuentaToEdit.Balance -= Movimiento.Monto;
+                Balance balanceToEdit = _balanceManager.ObtenerTodo.FirstOrDefault();
+                balanceToEdit.Ingresos -= Movimiento.Monto;
+                balanceToEdit.BalanceGeneral -= Movimiento.Monto;
 
-            _balanceManager.Actualizar(balanceToEdit);
-            _cuentaManager.Actualizar(cuentaToEdit);
-            _movimientoManager.Eliminar(MovimientoId);
+                _balanceManager.Actualizar(balanceToEdit);
+                _cuentaManager.Actualizar(cuentaToEdit);
+                _movimientoManager.Eliminar(MovimientoId);
 
-            MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, Movimiento);
-            MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
-            MessagingCenter.Send(this, MessageNames.BalanceChangedMessage, Balance);
+                //Send messages
+                MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, Movimiento);
+                MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
+                MessagingCenter.Send(this, MessageNames.BalanceChangedMessage, Balance);
 
-            await Shell.Current.Navigation.PopAsync();
+                await Shell.Current.Navigation.PopAsync();
 
-            ActualizarDatos();
+                ActualizarDatos(); 
+            }
         }
 
         private void OnApperaring(object obj)
@@ -179,45 +183,71 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
         private async void OnGuardarMovimineto(object obj)
         {
-            Movimiento.IdCategoria = Categoria.Id;
-            Movimiento.IdCuenta = Cuenta.Id;
+            Movimiento.IdCategoria = (Categoria != null)? Categoria.Id : default;
+            Movimiento.IdCuenta = (Cuenta != null)? Cuenta.Id : default;
             Movimiento.Fecha = DateTime.Now;
-            Cuenta cuentaToEdit = _cuentaManager.SearchById(Cuenta.Id);
+            Cuenta cuentaToEdit = (Cuenta != null) ? _cuentaManager.SearchById(Cuenta.Id) : new Cuenta();
             Balance balanceToEdit = _balanceManager.ObtenerTodo.FirstOrDefault();
 
 
             if (string.IsNullOrWhiteSpace(Movimiento.Id))
             {
                 cuentaToEdit.Balance += Movimiento.Monto;
-                balanceToEdit.BalanceGeneral += Movimiento.Monto;
                 balanceToEdit.Ingresos += Movimiento.Monto;
+                balanceToEdit.BalanceGeneral += Movimiento.Monto;
 
-                _movimientoManager.Insertar(Movimiento);
+                if (_movimientoManager.Insertar(Movimiento) is null)
+                {
+                    await Shell.Current.DisplayAlert("Advertencia", _movimientoManager.Error, "Aceptar");
+                    return;
+                }
             }
             else
             {
                 Movimiento movimientoToEdit = _movimientoManager.SearchById(Movimiento.Id);
                 decimal corregirMonto = 0;
                 decimal corregirIngreso = 0;
+                decimal corregirBalanceGeneral = 0;
+                decimal corregirMontoCuenta = 0;
                 if (movimientoToEdit.Monto > Movimiento.Monto)
                 {
                     corregirMonto = movimientoToEdit.Monto - Movimiento.Monto;
-                    corregirIngreso = balanceToEdit.Ingresos - corregirMonto; 
+                    corregirIngreso = balanceToEdit.Ingresos - corregirMonto;
+                    corregirBalanceGeneral = balanceToEdit.BalanceGeneral - corregirMonto;
+                    corregirMontoCuenta = cuentaToEdit.Balance - corregirMonto;
+
                 }
                 else if (movimientoToEdit.Monto < Movimiento.Monto)
                 {
-                    corregirMonto = movimientoToEdit.Monto + Movimiento.Monto;
+                    corregirMonto = Movimiento.Monto - movimientoToEdit.Monto;
                     corregirIngreso = balanceToEdit.Ingresos + corregirMonto;
+                    corregirBalanceGeneral = balanceToEdit.BalanceGeneral + corregirMonto;
+                    corregirMontoCuenta = cuentaToEdit.Balance + corregirMonto;
                 }
                 else if (movimientoToEdit.Monto == Movimiento.Monto)
                 {
-                    corregirIngreso = balanceToEdit.Ingresos;
+                    await Shell.Current.Navigation.PopAsync();
+                    if (_movimientoManager.Actualizar(Movimiento) is null)
+                    {
+                        await Shell.Current.DisplayAlert("Advertencia", _movimientoManager.Error, "Aceptar");
+                        return;
+                    }
+                    else
+                    {
+                        MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, Movimiento);
+                    }
+                    return;
                 }
 
                 balanceToEdit.Ingresos = corregirIngreso;
-                Movimiento.Monto = corregirMonto;
+                balanceToEdit.BalanceGeneral = corregirBalanceGeneral;
+                cuentaToEdit.Balance = corregirMontoCuenta;
 
-                _movimientoManager.Actualizar(Movimiento);
+                if (_movimientoManager.Actualizar(Movimiento) is null)
+                {
+                    await Shell.Current.DisplayAlert("Advertencia", _movimientoManager.Error, "Aceptar");
+                    return;
+                }
             }
 
             _cuentaManager.Actualizar(cuentaToEdit);

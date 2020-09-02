@@ -7,7 +7,8 @@ namespace MisGastos.COMMON.Validadores
     {
         public CuentaValidator()
         {
-
+            RuleFor(cuenta => cuenta.Nombre).NotEmpty();
+            RuleFor(cuenta => cuenta.ImageUrl).NotEmpty();
         }
     }
 }

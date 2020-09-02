@@ -120,13 +120,16 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
         private async void OnEliminarCuenta(object obj)
         {
-            _cuentaManager.Eliminar(CuentaId);
+            if (await Shell.Current.DisplayAlert("Aviso", $"¿Estas seguro de querer eliminar la cuenta \"{Cuenta.Nombre}\"?", "Si", "No"))
+            {
+                _cuentaManager.Eliminar(CuentaId);
 
-            MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
+                MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
 
-            await Shell.Current.Navigation.PopAsync();
+                await Shell.Current.Navigation.PopAsync();
 
-            ActualizarDatos();
+                ActualizarDatos();
+            }
         }
 
         private async void OnGuardarCuenta(object obj)
@@ -134,11 +137,19 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             if (string.IsNullOrEmpty(Cuenta.Id))
             {
                 Cuenta.Balance = 0.0M;
-                _cuentaManager.Insertar(Cuenta);
+                if (_cuentaManager.Insertar(Cuenta) is null)
+                {
+                    await Shell.Current.DisplayAlert("Advertencia", _cuentaManager.Error, "Aceptar");
+                    return;
+                }
             }
             else
             {
-                _cuentaManager.Actualizar(Cuenta);
+                if (_cuentaManager.Actualizar(Cuenta) is null)
+                {
+                    await Shell.Current.DisplayAlert("Advertencia", _cuentaManager.Error, "Aceptar");
+                    return;
+                }
             }
 
             MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);

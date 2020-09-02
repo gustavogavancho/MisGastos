@@ -11,7 +11,7 @@
         <ToolbarItem Text="Guardar" Command="{Binding GuardarCuentaCommand}"/>
         <ToolbarItem Text="Eliminar" Command="{Binding EliminarCuentaCommand}" />
     </ContentPage.ToolbarItems>
-    
+ 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,7 +20,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Text="Información cuenta:" Grid.Row="0"/>
-        <Entry Placeholder="Nombre cuenta" Grid.Row="1" Text="{Binding Cuenta.Nombre}"/>
+        <Entry Placeholder="Nombre cuenta" Grid.Row="1" Text="{Binding Cuenta.Nombre}" ClearButtonVisibility="WhileEditing" Keyboard="Text"/>
 
         <Label Grid.Row="2"
                Text="Seleccionar icono"/>

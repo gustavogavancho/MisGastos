@@ -7,7 +7,10 @@ namespace MisGastos.COMMON.Validadores
     {
         public MovimientoValidator()
         {
-
+            RuleFor(movimiento => movimiento.IdCuenta).NotEmpty();
+            RuleFor(movimiento => movimiento.IdCategoria).NotEmpty();
+            RuleFor(movimiento => movimiento.Monto).NotEmpty();
+            RuleFor(movimiento => movimiento.Descripcion).NotEmpty();
         }
     }
 }

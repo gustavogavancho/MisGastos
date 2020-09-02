@@ -14,15 +14,15 @@
         <StackLayout Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Start">
             <StackLayout Orientation="Horizontal">
                 <Label Text="Ingresos" FontAttributes="Bold"/>
-                <Label Margin="4,0,0,0" Text="{Binding Balance.Ingresos}" />
+                <Label Margin="4,0,0,0" Text="{Binding Balance.Ingresos, StringFormat='${0}'}" />
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Label Text="Egresos:" FontAttributes="Bold"/>
-                <Label Margin="4,0,0,0" Text="{Binding Balance.Egresos}" />
+                <Label Margin="4,0,0,0" Text="{Binding Balance.Egresos, StringFormat='${0}'}" />
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Label Text="Balance:" FontAttributes="Bold"/>
-                <Label Text="{Binding Balance.BalanceGeneral}"/>
+                <Label Text="{Binding Balance.BalanceGeneral, StringFormat='${0}'}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Button Text="+" Command="{Binding RegistrarIngresoCommnad}" />

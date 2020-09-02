@@ -10,6 +10,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Guardar" Command="{Binding GuardarMovimientoCommnad}"/>
+        <ToolbarItem Text="Eliminar" Command="{Binding EliminarMovimientoCommand}" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
@@ -77,8 +78,8 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Entry Placeholder="Cantidad" Grid.Row="4" Text="{Binding Movimiento.Monto}"/>
-                <Entry Placeholder="Descripción" Grid.Row="5" Text="{Binding Movimiento.Descripcion}"/>
+                <Entry Placeholder="Cantidad" Grid.Row="4" Text="{Binding Movimiento.Monto}" ClearButtonVisibility="WhileEditing" Keyboard="Numeric"/>
+                <Entry Placeholder="Descripción" Grid.Row="5" Text="{Binding Movimiento.Descripcion}" ClearButtonVisibility="WhileEditing" Keyboard="Text"/>
             </Grid>
         </ScrollView>
     </ContentPage.Content>

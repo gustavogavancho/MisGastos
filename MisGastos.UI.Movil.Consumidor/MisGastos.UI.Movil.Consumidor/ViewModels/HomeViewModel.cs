@@ -80,19 +80,18 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
         private async void OnMovimientoSelected(MovimientoModel movimientoModel)
         {
-            MovimientoModel check = movimientoModel;
-            var categoria = _categoriaManager.SearchById(check.Movimiento.IdCategoria);
+            Categoria categoria = _categoriaManager.SearchById(movimientoModel.Movimiento.IdCategoria);
             if (categoria.TipoCategoria == TipoCategoria.Ingresos)
             {
                 await Shell.Current.GoToAsync($"{nameof(RegistrarIngresoPage)}?{nameof(RegistrarIngresoViewModel.MovimientoId)}={movimientoModel.Movimiento.Id}");
             }
             else if (categoria.TipoCategoria == TipoCategoria.Gastos)
             {
-                await Shell.Current.GoToAsync(nameof(RegistrarEgresoPage));
+                await Shell.Current.GoToAsync($"{nameof(RegistrarEgresoPage)}?{nameof(RegistrarEgresoViewModel.MovimientoId)}={movimientoModel.Movimiento.Id}");
             }
         }
 
-        private void OnBalanceConfigChanged(ConfiguracionesViewModel arg1, Balance arg2)
+        private void OnBalanceConfigChanged(ConfiguracionesViewModel arg1, Balance balance)
         {
             ActualizarDatos();
         }

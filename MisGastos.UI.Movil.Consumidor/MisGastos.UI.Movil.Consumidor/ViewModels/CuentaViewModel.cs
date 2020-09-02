@@ -48,7 +48,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
         }
 
-        private void OnCuentaConfigChanged(ConfiguracionesViewModel arg1, Cuenta arg2)
+        private void OnCuentaConfigChanged(ConfiguracionesViewModel sender, Cuenta cuenta)
         {
             ActualizarDatos();
         }

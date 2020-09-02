@@ -88,8 +88,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             ActualizarDatos();
         }
 
-        private async void Current_Navigating(object sender,
-                        ShellNavigatingEventArgs e)
+        private async void Current_Navigating(object sender, ShellNavigatingEventArgs e)
         {
             if (e.CanCancel)
             {
@@ -130,24 +129,35 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
         private async void OnEliminarCategoria(object obj)
         {
-            _categoriaManager.Eliminar(CategoriaId);
+            if (await Shell.Current.DisplayAlert("Aviso", $"¿Estas seguro de querer eliminar la categoria \"{Categoria.Nombre}\"?", "Si", "No"))
+            {
+                _categoriaManager.Eliminar(CategoriaId);
 
-            MessagingCenter.Send(this, MessageNames.CategoriaChangedMessage, Categoria);
+                MessagingCenter.Send(this, MessageNames.CategoriaChangedMessage, Categoria);
 
-            await Shell.Current.Navigation.PopAsync();
+                await Shell.Current.Navigation.PopAsync();
 
-            ActualizarDatos();
+                ActualizarDatos(); 
+            }
         }
 
         private async void OnGuardarCateoria(object obj)
         {
             if (string.IsNullOrEmpty(Categoria.Id))
             {
-                _categoriaManager.Insertar(Categoria);
+                if (_categoriaManager.Insertar(Categoria) is null)
+                {
+                    await Shell.Current.DisplayAlert("Advertencia", _categoriaManager.Error, "Aceptar");
+                    return;
+                }
             }
             else
             {
-                _categoriaManager.Actualizar(Categoria);
+                if (_categoriaManager.Actualizar(Categoria) is null)
+                {
+                    await Shell.Current.DisplayAlert("Advertencia", _categoriaManager.Error, "Aceptar");
+                    return;
+                }
             }
 
             MessagingCenter.Send(this, MessageNames.CategoriaChangedMessage, Categoria);

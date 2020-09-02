@@ -75,7 +75,7 @@ namespace MisGastos.DAL.Local.LiteDB
             }
             else
             {
-                this.Error = "Error de validación\n ";
+                this.Error = "Error de validación:\n ";
                 foreach (ValidationFailure item in validationResult.Errors)
                 {
                     this.Error += $"{item.ErrorMessage}\n\r";
@@ -121,10 +121,10 @@ namespace MisGastos.DAL.Local.LiteDB
             }
             else
             {
-                this.Error = "Error de validación: ";
+                this.Error = "Error de validación:\n ";
                 foreach (ValidationFailure item in validationResult.Errors)
                 {
-                    this.Error += $"{item.ErrorMessage}.\n\r";
+                    this.Error += $"{item.ErrorMessage}\n\r";
                 }
                 return null;
             }

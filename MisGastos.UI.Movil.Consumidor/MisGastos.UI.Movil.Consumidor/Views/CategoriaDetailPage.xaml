@@ -23,7 +23,7 @@
         <Picker Title="Tipo de categoria" ItemsSource="{Binding TipoCategoria}" 
                 SelectedItem="{Binding Categoria.TipoCategoria}" Grid.Row="0"/>
         <Entry Text="{Binding Categoria.Nombre}" Grid.Row="1"
-               Placeholder="Nombre categoria"/>
+               Placeholder="Nombre categoria" ClearButtonVisibility="WhileEditing" Keyboard="Text"/>
 
         <Label Grid.Row="2"
                Text="Seleccionar icono"/>

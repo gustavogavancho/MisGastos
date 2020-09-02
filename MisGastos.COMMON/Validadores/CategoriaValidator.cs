@@ -7,7 +7,9 @@ namespace MisGastos.COMMON.Validadores
     {
         public CategoriaValidator()
         {
-
+            RuleFor(categoria => categoria.TipoCategoria).NotEmpty();
+            RuleFor(categoria => categoria.Nombre).NotEmpty();
+            RuleFor(categoria => categoria.ImageUrl).NotEmpty();
         }
     }
 }
