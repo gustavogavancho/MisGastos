@@ -105,7 +105,9 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             try
             {
                 Cuenta = _cuentaManager.SearchById(cuentaId);
-
+                int index = ImageList.IndexOf(Cuenta.ImageUrl);
+                Cuenta.ImageUrl = null;
+                Cuenta.ImageUrl = ImageList[index];
             }
             catch (Exception)
             {

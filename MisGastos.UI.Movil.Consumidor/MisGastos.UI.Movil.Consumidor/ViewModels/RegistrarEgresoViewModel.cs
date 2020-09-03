@@ -23,6 +23,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         private Categoria _categoria;
         private Balance _balance;
         private string _movimientoId;
+        private Cuenta _cuentaClean;
 
         FactoryManager _factoryManager;
         ICuentaManager _cuentaManager;
@@ -136,8 +137,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             ActualizarDatos();
         }
 
-        private async void Current_Navigating(object sender,
-                                ShellNavigatingEventArgs e)
+        private async void Current_Navigating(object sender, ShellNavigatingEventArgs e)
         {
             if (e.CanCancel)
             {
@@ -174,6 +174,8 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 Movimiento = _movimientoManager.SearchById(movimientoId);
                 Categoria = _categoriaManager.SearchById(Movimiento.IdCategoria);
                 Cuenta = _cuentaManager.SearchById(Movimiento.IdCuenta);
+                _cuentaClean = new Cuenta();
+                _cuentaClean = _cuentaManager.SearchById(Movimiento.IdCuenta);
             }
             catch (Exception)
             {
@@ -225,7 +227,6 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 }
                 else if (movimientoToEdit.Monto == Movimiento.Monto)
                 {
-                    await Shell.Current.Navigation.PopAsync();
                     if (_movimientoManager.Actualizar(Movimiento) is null)
                     {
                         await Shell.Current.DisplayAlert("Advertencia", _movimientoManager.Error, "Aceptar");
@@ -233,8 +234,21 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                     }
                     else
                     {
+                        if (Movimiento.IdCuenta != movimientoToEdit.IdCuenta)
+                        {
+                            Cuenta secondCuentaToEdit = new Cuenta();
+                            secondCuentaToEdit = _cuentaManager.SearchById(_cuentaClean.Id);
+                            secondCuentaToEdit.Balance += Movimiento.Monto;
+                            cuentaToEdit.Balance -= Movimiento.Monto;
+                            _cuentaManager.Actualizar(cuentaToEdit);
+                            _cuentaManager.Actualizar(secondCuentaToEdit);
+                            _cuentaClean = new Cuenta();
+                        }
+
                         MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, Movimiento);
+                        MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
                     }
+                    await Shell.Current.Navigation.PopAsync();
                     return;
                 }
 
@@ -246,6 +260,17 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 {
                     await Shell.Current.DisplayAlert("Advertencia", _movimientoManager.Error, "Aceptar");
                     return;
+                }
+
+                if (Movimiento.IdCuenta != movimientoToEdit.IdCuenta)
+                {
+                    Cuenta secondCuentaToEdit = new Cuenta();
+                    secondCuentaToEdit = _cuentaManager.SearchById(_cuentaClean.Id);
+                    secondCuentaToEdit.Balance += Movimiento.Monto;
+                    cuentaToEdit.Balance -= Movimiento.Monto;
+                    _cuentaManager.Actualizar(cuentaToEdit);
+                    _cuentaManager.Actualizar(secondCuentaToEdit);
+                    _cuentaClean = new Cuenta();
                 }
             }
 

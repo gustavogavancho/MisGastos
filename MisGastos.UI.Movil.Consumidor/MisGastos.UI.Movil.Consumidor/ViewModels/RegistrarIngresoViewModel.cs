@@ -23,6 +23,8 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         private Categoria _categoria;
         private Balance _balance;
         private string _movimientoId;
+        private Cuenta _cuentaClean;
+        private int _indexSelected;
 
         FactoryManager _factoryManager;
         ICuentaManager _cuentaManager;
@@ -79,6 +81,12 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             }
         }
 
+        public int IndexSelected
+        {
+            get => _indexSelected;
+            set => SetProperty(ref _indexSelected, value);
+        }
+
         public Command GuardarMovimientoCommnad { get; }
         public Command EliminarMovimientoCommand { get; }
         public Command RegresarCommand { get; }
@@ -91,8 +99,8 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             _factoryManager = factoryManager;
             _cuentaManager = _factoryManager.CuentaManager();
             _categoriaManager = factoryManager.CategoriaManager();
-            _movimientoManager = factoryManager.MovimientoManager();
-            _balanceManager = factoryManager.BalanceManager();
+            _movimientoManager = _factoryManager.MovimientoManager();
+            _balanceManager = _factoryManager.BalanceManager();
             GuardarMovimientoCommnad = new Command(OnGuardarMovimineto);
             EliminarMovimientoCommand = new Command(OnEliminarMovimiento);
             RegresarCommand = new Command(OnRegresar);
@@ -174,6 +182,8 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 Movimiento = _movimientoManager.SearchById(movimientoId);
                 Categoria = _categoriaManager.SearchById(Movimiento.IdCategoria);
                 Cuenta = _cuentaManager.SearchById(Movimiento.IdCuenta);
+                _cuentaClean = new Cuenta();
+                _cuentaClean = _cuentaManager.SearchById(Movimiento.IdCuenta);
             }
             catch (Exception)
             {
@@ -209,6 +219,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 decimal corregirIngreso = 0;
                 decimal corregirBalanceGeneral = 0;
                 decimal corregirMontoCuenta = 0;
+
                 if (movimientoToEdit.Monto > Movimiento.Monto)
                 {
                     corregirMonto = movimientoToEdit.Monto - Movimiento.Monto;
@@ -226,7 +237,6 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                 }
                 else if (movimientoToEdit.Monto == Movimiento.Monto)
                 {
-                    await Shell.Current.Navigation.PopAsync();
                     if (_movimientoManager.Actualizar(Movimiento) is null)
                     {
                         await Shell.Current.DisplayAlert("Advertencia", _movimientoManager.Error, "Aceptar");
@@ -234,8 +244,21 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                     }
                     else
                     {
+                        if (Movimiento.IdCuenta != movimientoToEdit.IdCuenta)
+                        {
+                            Cuenta secondCuentaToEdit = new Cuenta();
+                            secondCuentaToEdit = _cuentaManager.SearchById(_cuentaClean.Id);
+                            secondCuentaToEdit.Balance -= Movimiento.Monto;
+                            cuentaToEdit.Balance += Movimiento.Monto;
+                            _cuentaManager.Actualizar(cuentaToEdit);
+                            _cuentaManager.Actualizar(secondCuentaToEdit);
+                            _cuentaClean = new Cuenta();
+                        }
+
                         MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, Movimiento);
+                        MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
                     }
+                    await Shell.Current.Navigation.PopAsync();
                     return;
                 }
 
@@ -248,10 +271,22 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                     await Shell.Current.DisplayAlert("Advertencia", _movimientoManager.Error, "Aceptar");
                     return;
                 }
+
+                if (Movimiento.IdCuenta != movimientoToEdit.IdCuenta)
+                {
+                    Cuenta secondCuentaToEdit = new Cuenta();
+                    secondCuentaToEdit = _cuentaManager.SearchById(_cuentaClean.Id);
+                    secondCuentaToEdit.Balance -= Movimiento.Monto;
+                    cuentaToEdit.Balance += Movimiento.Monto;
+                    _cuentaManager.Actualizar(cuentaToEdit);
+                    _cuentaManager.Actualizar(secondCuentaToEdit);
+                    _cuentaClean = new Cuenta();
+                }
             }
 
             _cuentaManager.Actualizar(cuentaToEdit);
             _balanceManager.Actualizar(balanceToEdit);
+
 
             MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
             MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, Movimiento);

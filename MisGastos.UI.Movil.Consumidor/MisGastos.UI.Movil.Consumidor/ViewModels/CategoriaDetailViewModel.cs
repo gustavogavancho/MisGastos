@@ -115,6 +115,9 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             try
             {
                 Categoria = _categoriaManager.SearchById(categoriaId);
+                int index = ImageList.IndexOf(Categoria.ImageUrl);
+                Categoria.ImageUrl = null;
+                Categoria.ImageUrl = ImageList[index];
             }
             catch (Exception)
             {

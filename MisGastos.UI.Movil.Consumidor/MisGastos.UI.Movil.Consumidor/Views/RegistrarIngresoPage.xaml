@@ -31,7 +31,8 @@
                 <ListView x:Name="CuentaListView" HasUnevenRows="True" CachingStrategy="RecycleElement" Grid.Row="1"
                           VerticalOptions="Start"
                           ItemsSource="{Binding Cuentas}" SelectionMode="Single"
-                          SelectedItem="{Binding Cuenta}">
+                          SelectedItem="{Binding Cuenta}"
+                          TabIndex="{Binding IndexSelected}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
