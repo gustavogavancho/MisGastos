@@ -16,6 +16,11 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
     [QueryProperty(nameof(MovimientoId), nameof(MovimientoId))]
     public class RegistrarEgresoViewModel : BaseViewModel
     {
+        ICuentaManager _cuentaManager;
+        ICategoriaManager _categoriaManager;
+        IMovimientoManager _movimientoManager;
+        IBalanceManager _balanceManager;
+
         private ObservableCollection<Cuenta> _cuentas;
         private ObservableCollection<Categoria> _categorias;
         private Movimiento _movimiento;
@@ -24,12 +29,6 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         private Balance _balance;
         private string _movimientoId;
         private Cuenta _cuentaClean;
-
-        FactoryManager _factoryManager;
-        ICuentaManager _cuentaManager;
-        ICategoriaManager _categoriaManager;
-        IMovimientoManager _movimientoManager;
-        IBalanceManager _balanceManager;
 
         public ObservableCollection<Cuenta> Cuentas
         {
@@ -89,18 +88,35 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         public RegistrarEgresoViewModel(FactoryManager factoryManager)
         {
             Title = "Registrar Egreso";
-            _factoryManager = factoryManager;
-            _cuentaManager = _factoryManager.CuentaManager();
-            _categoriaManager = _factoryManager.CategoriaManager();
-            _movimientoManager = _factoryManager.MovimientoManager();
-            _balanceManager = _factoryManager.BalanceManager();
+            _cuentaManager = factoryManager.CuentaManager();
+            _categoriaManager = factoryManager.CategoriaManager();
+            _movimientoManager = factoryManager.MovimientoManager();
+            _balanceManager = factoryManager.BalanceManager();
             GuardarMovimientoCommnad = new Command(OnGuardarMovimineto);
             EliminarMovimientoCommand = new Command(OnEliminarMovmiento);
             RegresarCommand = new Command(OnRegresar);
             OnApperaringCommand = new Command(OnApperaring);
             OnDisappearingCommand = new Command(OnDisappearing);
             ActualizarDatos();
+
+            MessagingCenter.Subscribe<CuentaDetailViewModel, Cuenta>
+                (this, MessageNames.CuentaChangedMessage, OnCuentaChanged);
+
+            MessagingCenter.Subscribe<CategoriaDetailViewModel, Categoria>
+                (this, MessageNames.CategoriaChangedMessage, OnCategoriaChanged);
+
         }
+
+        private void OnCategoriaChanged(CategoriaDetailViewModel sender, Categoria categoria)
+        {
+            ActualizarDatos();
+        }
+
+        private void OnCuentaChanged(CuentaDetailViewModel sender, Cuenta cuenta)
+        {
+            ActualizarDatos();
+        }
+
         private async void OnEliminarMovmiento(object obj)
         {
             if (await Shell.Current.DisplayAlert("Aviso", $"¿Estas seguro de querer eliminar el movimiento \"{Movimiento.Descripcion}\"?", "Si", "No"))
@@ -194,8 +210,8 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
             if (string.IsNullOrWhiteSpace(Movimiento.Id))
             {
                 cuentaToEdit.Balance -= Movimiento.Monto;
-                balanceToEdit.BalanceGeneral -= Movimiento.Monto;
                 balanceToEdit.Egresos -= Movimiento.Monto;
+                balanceToEdit.BalanceGeneral -= Movimiento.Monto;
 
                 if (_movimientoManager.Insertar(Movimiento) is null)
                 {
@@ -216,7 +232,30 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                     corregirMonto = movimientoToEdit.Monto - Movimiento.Monto;
                     corregirEgreso = balanceToEdit.Egresos + corregirMonto;
                     corregirBalanceGeneral = balanceToEdit.BalanceGeneral + corregirMonto;
-                    corregirMontoCuenta = cuentaToEdit.Balance + corregirMonto;
+                    corregirMontoCuenta = cuentaToEdit.Balance + corregirEgreso;
+
+                    //TODO:
+                    balanceToEdit.Egresos = corregirEgreso;
+                    balanceToEdit.BalanceGeneral = corregirBalanceGeneral;
+                    cuentaToEdit.Balance = corregirMontoCuenta;
+
+                    if (_movimientoManager.Actualizar(Movimiento) is null)
+                    {
+                        await Shell.Current.DisplayAlert("Advertencia", _movimientoManager.Error, "Aceptar");
+                        return;
+                    }
+
+                    if (Movimiento.IdCuenta != movimientoToEdit.IdCuenta)
+                    {
+                        Cuenta secondCuentaToEdit = new Cuenta();
+                        secondCuentaToEdit = _cuentaManager.SearchById(_cuentaClean.Id);
+                        secondCuentaToEdit.Balance += Movimiento.Monto + corregirMonto;
+                        //cuentaToEdit.Balance -= movimientoToEdit.Monto;
+                        //cuentaToEdit.Balance -= Movimiento.Monto;
+                        _cuentaManager.Actualizar(cuentaToEdit);
+                        _cuentaManager.Actualizar(secondCuentaToEdit);
+                        _cuentaClean = new Cuenta();
+                    }
                 }
                 else if (movimientoToEdit.Monto < Movimiento.Monto)
                 {
@@ -224,6 +263,28 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                     corregirEgreso = balanceToEdit.Egresos - corregirMonto;
                     corregirBalanceGeneral = balanceToEdit.BalanceGeneral - corregirMonto;
                     corregirMontoCuenta = cuentaToEdit.Balance - corregirMonto;
+
+                    //TODO:
+                    balanceToEdit.Egresos = corregirEgreso;
+                    balanceToEdit.BalanceGeneral = corregirBalanceGeneral;
+                    cuentaToEdit.Balance = corregirMontoCuenta;
+
+                    if (_movimientoManager.Actualizar(Movimiento) is null)
+                    {
+                        await Shell.Current.DisplayAlert("Advertencia", _movimientoManager.Error, "Aceptar");
+                        return;
+                    }
+
+                    if (Movimiento.IdCuenta != movimientoToEdit.IdCuenta)
+                    {
+                        Cuenta secondCuentaToEdit = new Cuenta();
+                        secondCuentaToEdit = _cuentaManager.SearchById(_cuentaClean.Id);
+                        secondCuentaToEdit.Balance += Movimiento.Monto - corregirMonto;
+                        cuentaToEdit.Balance -= movimientoToEdit.Monto;
+                        _cuentaManager.Actualizar(cuentaToEdit);
+                        _cuentaManager.Actualizar(secondCuentaToEdit);
+                        _cuentaClean = new Cuenta();
+                    }
                 }
                 else if (movimientoToEdit.Monto == Movimiento.Monto)
                 {
@@ -245,32 +306,11 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
                             _cuentaClean = new Cuenta();
                         }
 
-                        MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, Movimiento);
-                        MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
+                        //MessagingCenter.Send(this, MessageNames.MovimientoChangedMessage, Movimiento);
+                        //MessagingCenter.Send(this, MessageNames.CuentaChangedMessage, Cuenta);
                     }
                     await Shell.Current.Navigation.PopAsync();
                     return;
-                }
-
-                balanceToEdit.Egresos = corregirEgreso;
-                balanceToEdit.BalanceGeneral = corregirBalanceGeneral;
-                cuentaToEdit.Balance = corregirMontoCuenta;
-
-                if (_movimientoManager.Actualizar(Movimiento) is null)
-                {
-                    await Shell.Current.DisplayAlert("Advertencia", _movimientoManager.Error, "Aceptar");
-                    return;
-                }
-
-                if (Movimiento.IdCuenta != movimientoToEdit.IdCuenta)
-                {
-                    Cuenta secondCuentaToEdit = new Cuenta();
-                    secondCuentaToEdit = _cuentaManager.SearchById(_cuentaClean.Id);
-                    secondCuentaToEdit.Balance += Movimiento.Monto;
-                    cuentaToEdit.Balance -= Movimiento.Monto;
-                    _cuentaManager.Actualizar(cuentaToEdit);
-                    _cuentaManager.Actualizar(secondCuentaToEdit);
-                    _cuentaClean = new Cuenta();
                 }
             }
 

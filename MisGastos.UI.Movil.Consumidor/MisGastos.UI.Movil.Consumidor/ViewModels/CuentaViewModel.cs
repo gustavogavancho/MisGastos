@@ -4,7 +4,6 @@ using MisGastos.COMMON.Interfaces;
 using MisGastos.UI.Movil.Consumidor.Extensions;
 using MisGastos.UI.Movil.Consumidor.Utility;
 using MisGastos.UI.Movil.Consumidor.Views;
-using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
@@ -12,10 +11,9 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 {
     public class CuentaViewModel : BaseViewModel
     {
-        private ObservableCollection<Cuenta> _cuentas;
-
-        FactoryManager _factoryManager;
         ICuentaManager _cuentaManager;
+
+        private ObservableCollection<Cuenta> _cuentas;
 
         public ObservableCollection<Cuenta> Cuentas
         {
@@ -29,8 +27,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         public CuentaViewModel(FactoryManager factoryManager)
         {
             Title = "Cuenta";
-            _factoryManager = factoryManager;
-            _cuentaManager = _factoryManager.CuentaManager();
+            _cuentaManager = factoryManager.CuentaManager();
             AgregarCuentaCommand = new Command(OnAgregarCuenta);
             CuentaSelectedCommand = new Command<Cuenta>(OnCuentaSelected);
             ActualizarDatos();

@@ -15,15 +15,14 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-        private ObservableCollection<Movimiento> _movimientos;
-        private Balance _balance;
-        private ObservableCollection<MovimientoModel> _movimientoModels;
-
-        FactoryManager _factoryManager;
         IMovimientoManager _movimientoManager;
         ICuentaManager _cuentaManager;
         ICategoriaManager _categoriaManager;
         IBalanceManager _balanceManager;
+
+        private ObservableCollection<Movimiento> _movimientos;
+        private Balance _balance;
+        private ObservableCollection<MovimientoModel> _movimientoModels;
 
         public Command RegistrarIngresoCommnad { get; } 
         public Command RegistrarEgresoCommand { get; }
@@ -50,8 +49,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         public HomeViewModel(FactoryManager factoryManager)
         {
             Title = "Inicio";
-            _factoryManager = factoryManager;
-            _movimientoManager = _factoryManager.MovimientoManager();
+            _movimientoManager = factoryManager.MovimientoManager();
             _balanceManager = factoryManager.BalanceManager();
             _categoriaManager = factoryManager.CategoriaManager();
             _cuentaManager = factoryManager.CuentaManager();

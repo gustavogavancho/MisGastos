@@ -264,4 +264,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\icon_ingreso.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_resumen.png" />
+  </ItemGroup>
 </Project>

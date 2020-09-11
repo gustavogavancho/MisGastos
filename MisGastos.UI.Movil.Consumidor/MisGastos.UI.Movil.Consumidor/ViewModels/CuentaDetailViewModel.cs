@@ -14,7 +14,6 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
     [QueryProperty(nameof(CuentaId), nameof(CuentaId))]
     public class CuentaDetailViewModel : BaseViewModel
     {
-        FactoryManager _factoryManager;
         ICuentaManager _cuentaManager;
 
         private Cuenta _cuenta;
@@ -55,8 +54,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         public CuentaDetailViewModel(FactoryManager factoryManager)
         {
             Title = "Detalle Cuenta";
-            _factoryManager = factoryManager;
-            _cuentaManager = _factoryManager.CuentaManager();
+            _cuentaManager = factoryManager.CuentaManager();
             GuardarCuentaCommand = new Command(OnGuardarCuenta);
             EliminarCuentaCommand = new Command(OnEliminarCuenta);
             RegresarCommand = new Command(OnRegresar);

@@ -18,7 +18,6 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
     [QueryProperty(nameof(CategoriaId), nameof(CategoriaId))]
     public class CategoriaDetailViewModel : BaseViewModel
     {
-        FactoryManager _factoryManager;
         ICategoriaManager _categoriaManager;
 
         private Categoria _categoria;
@@ -66,8 +65,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         public CategoriaDetailViewModel(FactoryManager factoryManager)
         {
             Title = "Detalle categoria";
-            _factoryManager = factoryManager;
-            _categoriaManager = _factoryManager.CategoriaManager();
+            _categoriaManager = factoryManager.CategoriaManager();
             GuardarCategoriaCommnad = new Command(OnGuardarCateoria);
             EliminarCategoriaCommand = new Command(OnEliminarCategoria);
             RegresarCommand = new Command(OnRegresar);

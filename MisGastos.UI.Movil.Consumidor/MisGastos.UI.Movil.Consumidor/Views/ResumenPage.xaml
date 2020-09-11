@@ -1,44 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MisGastos.UI.Movil.Consumidor.Views.HomePage"
-             Title="{Binding Title}"
-             Padding="5"
-             xmlns:behavior="clr-namespace:MisGastos.UI.Movil.Consumidor.Behaviors">
+             x:Class="MisGastos.UI.Movil.Consumidor.Views.ResumenPage"
+             Title="Resumen movimientos">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <StackLayout Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Start">
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Ingresos" FontAttributes="Bold"/>
-                <Label Margin="4,0,0,0" Text="{Binding Balance.Ingresos, StringFormat='${0}'}" />
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Egresos:" FontAttributes="Bold"/>
-                <Label Margin="4,0,0,0" Text="{Binding Balance.Egresos, StringFormat='${0}'}" />
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Balance:" FontAttributes="Bold"/>
-                <Label Text="{Binding Balance.BalanceGeneral, StringFormat='${0}'}"/>
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Button Text="+" Command="{Binding RegistrarIngresoCommnad}" />
-                <Button Text="-" Command="{Binding RegistrarEgresoCommand}"/>
-            </StackLayout>
-        </StackLayout>
-        <Label Text="Lista transacciones" Grid.Row="1"/>
-        
+        <Picker ItemsSource="{Binding Cuentas}" ItemDisplayBinding="{Binding Nombre}" SelectedItem="{Binding Cuenta}"/>
+        <Label Text="Lista de movimientos" Grid.Row="1"/>
         <ListView x:Name="MovimientosListView" HasUnevenRows="True" CachingStrategy="RecycleElement" Grid.Row="2"
-                  VerticalOptions="Start" ItemsSource="{Binding MovimientoModels}" SelectionMode="Single">
-            <ListView.Behaviors>
-                <behavior:EventToCommandBehavior
-                    EventName="ItemTapped"
-                    Command="{Binding MovimientoSelectedCommand}"
-                    EventArgsConverter="{StaticResource LocalItemTappedConverter}"/>
-            </ListView.Behaviors>
+                  VerticalOptions="Start" ItemsSource="{Binding Movimientos}" SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -61,5 +36,20 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Grid Grid.Row="3" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="70"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Total Ingresos:" Grid.Row="0" FontAttributes="Bold" HorizontalOptions="End"/>
+            <Label Text="{Binding TotalIngresos, StringFormat='{0:c}'}" Grid.Row="0" Grid.Column="1"/>
+            <Label Text="Total Egresos:" Grid.Row="1" FontAttributes="Bold" HorizontalOptions="End"/>
+            <Label Text="{Binding TotalEgresos, StringFormat='{0:c}'}" Grid.Row="1" Grid.Column="1"/>
+        </Grid>
     </Grid>
 </ContentPage>

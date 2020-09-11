@@ -6,5 +6,6 @@
         public const string CategoriaChangedMessage = "CategoriaChanged";
         public const string MovimientoChangedMessage = "MovimientoChanged";
         public const string BalanceChangedMessage = "BalanceChanged";
+        public const string ResumenChangedMessage = "ResumenChanged";
     }
 }

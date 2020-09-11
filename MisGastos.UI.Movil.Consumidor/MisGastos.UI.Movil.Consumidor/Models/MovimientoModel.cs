@@ -10,5 +10,10 @@ namespace MisGastos.UI.Movil.Consumidor.Models
         public string DescripcionMovimiento { get; set; }
         public string ImageUrl { get; set; }
         public string Background { get; set; }
+
+        public override string ToString()
+        {
+            return $"{NombreCuenta} - {Movimiento.Fecha.ToShortDateString()}"; 
+        }
     }
 }

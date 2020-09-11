@@ -9,5 +9,7 @@ namespace MisGastos.COMMON.Interfaces
         IEnumerable<Movimiento> BuscarPorCategoria(string idCategoria);
 
         IEnumerable<Movimiento> BuscarPorFecha(DateTime fecha);
+
+        IEnumerable<Movimiento> BuscarPorCuenta(string idCuenta);
     }
 }

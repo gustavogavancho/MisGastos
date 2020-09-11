@@ -27,5 +27,8 @@ namespace MisGastos.UI.Movil.Consumidor.Utility
 
         public static ConfiguracionesViewModel ConfiguracionesViewModel { get; set; } =
             new ConfiguracionesViewModel();
+
+        public static ResumenViewModel ResumenViewModel { get; set; } =
+            new ResumenViewModel(App.FactoryManager);
     }
 }

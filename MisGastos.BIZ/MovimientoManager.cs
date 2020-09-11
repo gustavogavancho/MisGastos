@@ -18,6 +18,11 @@ namespace MisGastos.BIZ
             return _repositorio.Query(movimiento => movimiento.IdCategoria == idCategoria);
         }
 
+        public IEnumerable<Movimiento> BuscarPorCuenta(string idCuenta)
+        {
+            return _repositorio.Query(movimiento => movimiento.IdCuenta == idCuenta);
+        }
+
         public IEnumerable<Movimiento> BuscarPorFecha(DateTime fecha)
         {
             return _repositorio.Query(movimiento => movimiento.Fecha == fecha);

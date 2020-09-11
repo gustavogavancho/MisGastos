@@ -10,6 +10,7 @@ namespace MisGastos.UI.Movil.Consumidor.Views
     public partial class CategoriaDetailPage : ContentPage
     {
         CategoriaDetailViewModel _viewModel;
+
         public CategoriaDetailPage()
         {
             InitializeComponent();

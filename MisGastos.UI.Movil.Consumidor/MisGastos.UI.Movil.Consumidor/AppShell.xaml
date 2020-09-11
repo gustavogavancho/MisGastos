@@ -23,10 +23,72 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <TabBar>
-        <ShellContent Title="Incio" Icon="tab_home.png" Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}"/>
-        <ShellContent Title="Cuenta" Icon="tab_cuenta.png" Route="CuentaPage" ContentTemplate="{DataTemplate local:CuentaPage}" />
-        <ShellContent Title="Categoria" Icon="tab_categoria.png" Route="CategoriaPage" ContentTemplate="{DataTemplate local:CategoriaPage}"/>
-        <ShellContent Title="Configuraciones" Icon="tab_configuraciones.png" Route="ConfiguracionesPage" ContentTemplate="{DataTemplate local:ConfiguracionesPage}"/>
-    </TabBar>
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding FlyoutIcon}"
+                       Margin="5"
+                       HeightRequest="25" />
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
+                       VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding Icon}"
+                       Margin="5"
+                       HeightRequest="45" />
+                <Label Grid.Column="1"
+                       Text="{Binding Text}"
+                       FontAttributes="Italic"
+                       VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+
+    <FlyoutItem Route="HomePage" Title="Home">
+        <FlyoutItem.FlyoutIcon>
+            <FileImageSource File="tab_home.png"/>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent ContentTemplate="{DataTemplate local:HomePage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Route="Resumen" Title="Resumen">
+        <FlyoutItem.FlyoutIcon>
+            <FileImageSource File="icon_resumen.png"/>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent ContentTemplate="{DataTemplate local:ResumenPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Route="CuentaPage" Title="Cuentas">
+        <FlyoutItem.FlyoutIcon>
+            <FileImageSource File="tab_cuenta.png"/>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent ContentTemplate="{DataTemplate local:CuentaPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Route="CategoriaPage" Title="Categoria">
+        <FlyoutItem.FlyoutIcon>
+            <FileImageSource File="tab_categoria.png"/>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent ContentTemplate="{DataTemplate local:CategoriaPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Route="ConfiguracionesPage" Title="Configuraciones">
+        <FlyoutItem.FlyoutIcon>
+            <FileImageSource File="tab_configuraciones.png"/>
+        </FlyoutItem.FlyoutIcon>
+        <ShellContent ContentTemplate="{DataTemplate local:ConfiguracionesPage}" />
+    </FlyoutItem>
 </Shell>

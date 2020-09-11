@@ -11,10 +11,9 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 {
     public class CategoriaViewModel : BaseViewModel
     {
-        private ObservableCollection<Categoria> _categoria;
-
-        FactoryManager _factoryManager;
         ICategoriaManager _categoriaManager;
+
+        private ObservableCollection<Categoria> _categoria;
 
         public ObservableCollection<Categoria> Categorias
         {
@@ -28,7 +27,6 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
         public CategoriaViewModel(FactoryManager factoryManager)
         {
             Title = "Categoria";
-            _factoryManager = factoryManager;
             _categoriaManager = factoryManager.CategoriaManager();
             AgregarCategoriaCommand = new Command(OnAgregarCategoria);
             CategoriaSelectedCommnad = new Command<Categoria>(OnCategoriaSelected);

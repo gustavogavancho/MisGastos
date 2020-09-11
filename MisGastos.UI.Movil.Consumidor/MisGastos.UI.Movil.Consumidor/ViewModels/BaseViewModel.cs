@@ -44,6 +44,7 @@ namespace MisGastos.UI.Movil.Consumidor.ViewModels
 
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
     }
 }
